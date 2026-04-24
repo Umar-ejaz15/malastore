@@ -16,8 +16,8 @@ export function ProductGrid({ products, columns = 4 }: ProductGridProps) {
   if (products.length === 0) {
     return (
       <div className="text-center py-24">
-        <p className="font-display italic text-2xl text-brown-light mb-2">No products found</p>
-        <p className="font-body text-brown-light" style={{ fontSize: 15 }}>Try adjusting your filters</p>
+        <p className="font-display text-2xl text-grey mb-2">No products found</p>
+        <p className="font-body text-grey text-sm">Try adjusting your filters</p>
       </div>
     )
   }

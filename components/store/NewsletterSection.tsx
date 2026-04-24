@@ -3,75 +3,60 @@
 import { useState } from 'react'
 
 export function NewsletterSection() {
-  const [email, setEmail]         = useState('')
+  const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!email.trim()) return
-    // Sanity integration: POST to newsletter webhook
     setSubmitted(true)
     setEmail('')
     setTimeout(() => setSubmitted(false), 3000)
   }
 
   return (
-    <section className="relative overflow-hidden py-20 px-8 text-center bg-gradient-to-r from-navy via-charcoal to-slate">
-      {/* Decorative orbs */}
+    <section className="relative overflow-hidden py-20 px-6 text-center bg-navy">
       <div
-        className="absolute pointer-events-none"
-        style={{
-          top: '-120px', left: '-120px', width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%)',
-        }}
+        className="absolute pointer-events-none top-0 left-0 w-96 h-96 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20"
+        style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
         aria-hidden="true"
       />
       <div
-        className="absolute pointer-events-none"
-        style={{
-          bottom: '-80px', right: '-80px', width: 320, height: 320, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%)',
-        }}
+        className="absolute pointer-events-none bottom-0 right-0 w-80 h-80 translate-x-1/3 translate-y-1/3 rounded-full opacity-10"
+        style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
         aria-hidden="true"
       />
 
       <div className="relative max-w-lg mx-auto">
-        <p className="font-ui text-gold mb-3" style={{ fontSize: 10, letterSpacing: '0.4em' }}>
-          JOIN THE CIRCLE
+        <p className="font-ui text-gold text-[10px] tracking-[0.35em] uppercase mb-4">
+          Stay in the Loop
         </p>
-        <h2
-          className="font-display italic font-normal text-off-white leading-tight mb-2"
-          style={{ fontSize: 'clamp(1.7rem, 4vw, 2.3rem)' }}
-        >
-          Exclusive Offers &amp; New Arrivals
+        <h2 className="font-display text-3xl md:text-4xl font-semibold text-off-white leading-snug mb-3">
+          New Arrivals & Exclusive Offers
         </h2>
-        <p className="font-body text-off-white/70 mb-9" style={{ fontSize: 15 }}>
+        <p className="font-body text-off-white/60 text-sm mb-9 leading-relaxed">
           Be the first to know — new collections, curated edits, and private sales.
         </p>
 
-        <form onSubmit={handleSubmit} className="flex rounded-lg overflow-hidden">
+        <form onSubmit={handleSubmit} className="flex rounded-lg overflow-hidden shadow-lg">
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email address"
             required
-            className="flex-1 bg-off-white/5 font-body text-off-white placeholder:text-off-white/40 outline-none transition-colors px-5 py-3.5 border border-gold/20 focus:border-gold focus:ring-2 focus:ring-gold/10"
-            style={{
-              fontSize: 15,
-            }}
+            className="flex-1 bg-white/5 font-body text-sm text-off-white placeholder:text-off-white/40 outline-none px-5 py-4 border border-gold/20 focus:border-gold transition-colors"
           />
           <button
             type="submit"
-            className="bg-gold hover:bg-gold-light text-navy font-ui font-bold whitespace-nowrap px-7 py-3.5 transition-colors duration-200"
-            style={{ fontSize: 11, letterSpacing: '0.22em' }}
+            className="bg-gold hover:bg-gold-light text-navy font-ui font-bold text-[11px] tracking-[0.2em] uppercase whitespace-nowrap px-7 py-4 transition-colors duration-200"
           >
-            {submitted ? '✓ Subscribed' : 'SUBSCRIBE'}
+            {submitted ? '✓ Done' : 'Subscribe'}
           </button>
         </form>
 
-        <p className="font-ui text-off-white/50 mt-4" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-          NO SPAM, EVER — UNSUBSCRIBE ANYTIME
+        <p className="font-ui text-off-white/30 text-[10px] tracking-widest uppercase mt-4">
+          No spam, ever — unsubscribe anytime
         </p>
       </div>
     </section>

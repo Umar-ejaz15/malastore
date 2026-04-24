@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Cormorant_Garamond } from 'next/font/google'
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
@@ -7,24 +7,23 @@ import { Header } from '@/components/layout/Header'
 import { CartSidebar } from '@/components/layout/CartSidebar'
 import { Footer } from '@/components/layout/Footer'
 
-const playfair = Playfair_Display({
-  variable: '--font-playfair',
+const cormorant = Cormorant_Garamond({
+  variable: '--font-display',
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+  style: ['normal'],
 })
 
-const cormorant = Cormorant_Garamond({
-  variable: '--font-cormorant',
+const dmSans = DM_Sans({
+  variable: '--font-body',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  style: ['normal', 'italic'],
+  weight: ['300', '400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
-  title: 'Mal\u0101 \u2014 Luxury Pakistani Fashion',
+  title: 'MALA By Kashmala — Ready-to-Wear Pakistani Fashion',
   description:
-    'Discover Mal\u0101\u2019s curated collections of luxury lawn, formals, and ready-to-wear Pakistani fashion. Celebrating heritage craftsmanship with a modern, editorial aesthetic.',
+    'MALA By Kashmala — clean silhouettes, thoughtful tailoring, and premium fabrics. Ready-to-wear collections for the modern Pakistani woman. Founded 2026.',
 }
 
 export default function RootLayout({
@@ -35,9 +34,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
     >
-      <body className="min-h-screen flex flex-col bg-ivory text-brown font-body">
+      <body className="min-h-screen flex flex-col bg-white text-navy font-body">
         <Providers>
           <AnnouncementBar />
           <Header />

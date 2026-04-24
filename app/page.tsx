@@ -1,6 +1,5 @@
 import { PlaceholderImage } from '@/components/ui/PlaceholderImage'
 import { Button } from '@/components/ui/Button'
-import { SectionHeader } from '@/components/ui/SectionHeader'
 import { FeatureStrip } from '@/components/store/FeatureStrip'
 import { CategoryCard } from '@/components/store/CategoryCard'
 import { LookbookCard } from '@/components/store/LookbookCard'
@@ -29,8 +28,8 @@ export default function HomePage() {
         </div>
 
         {/* Dynamic gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/40 via-navy/20 to-navy/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-b from-navy/40 via-navy/20 to-navy/60" />
+        <div className="absolute inset-0 bg-linear-to-r from-navy/30 to-transparent" />
 
         {/* Content — Centered with modern typography */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6">
@@ -38,19 +37,19 @@ export default function HomePage() {
           <div className="mb-6 animate-fade-up">
             <span className="inline-block px-4 py-2 bg-gold/15 backdrop-blur rounded-full border border-gold/30">
               <p className="font-ui text-xs font-semibold text-gold uppercase tracking-widest">
-                ✨ Eid Collection 2026
+                New Arrivals — 2026
               </p>
             </span>
           </div>
 
           {/* Main headline */}
           <h1 className="font-display text-5xl md:text-7xl font-bold text-off-white leading-tight mb-6 animate-fade-up delay-100 max-w-4xl">
-            Timeless Elegance
+            Quiet Confidence.<br />Intentional Design.
           </h1>
 
           {/* Subheading */}
           <p className="font-body text-lg md:text-xl text-off-white/80 max-w-2xl mb-12 animate-fade-up delay-200 leading-relaxed">
-            A celebration of craftsmanship, heritage, and the art of dressing beautifully. Discover pieces that tell your story.
+            Ready-to-wear collections for the woman who values simplicity, yet refuses to be overlooked.
           </p>
 
           {/* CTA Buttons */}
@@ -68,7 +67,7 @@ export default function HomePage() {
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
           <p className="text-off-white/50 text-xs uppercase tracking-widest font-ui">Scroll to explore</p>
           <div className="flex flex-col items-center gap-1">
-            <div className="w-0.5 h-12 bg-gradient-to-b from-gold to-transparent" />
+            <div className="w-0.5 h-12 bg-linear-to-b from-gold to-transparent" />
             <svg className="w-5 h-5 text-off-white/50 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
@@ -88,10 +87,10 @@ export default function HomePage() {
         <div className="mb-16">
           <p className="font-ui text-sm font-semibold text-gold uppercase tracking-widest mb-3">Shop By Style</p>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-navy mb-4">
-            Curated Collections
+            Collections
           </h2>
           <p className="text-grey max-w-2xl text-lg">
-            Each collection is handpicked to celebrate the fusion of tradition and contemporary style.
+            Ready-to-wear pieces designed for the modern Pakistani woman — clean, refined, and enduring.
           </p>
         </div>
 
@@ -134,9 +133,9 @@ export default function HomePage() {
       {/* ────────────────────────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28">
         <div className="mb-16">
-          <p className="font-ui text-sm font-semibold text-gold uppercase tracking-widest mb-3">Customer Favorites</p>
+          <p className="font-ui text-sm font-semibold text-gold uppercase tracking-widest mb-3">New In</p>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-navy mb-4">
-            Trending This Week
+            New Arrivals
           </h2>
         </div>
 
@@ -155,16 +154,16 @@ export default function HomePage() {
       {/* CLOSING CTA — Modern Banner */}
       {/* ────────────────────────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 mb-12">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-navy via-charcoal to-slate p-12 md:p-20">
+        <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-navy via-charcoal to-slate p-12 md:p-20">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -mr-48 -mt-48 blur-3xl" />
           
           <div className="relative z-10">
             <h3 className="font-display text-4xl md:text-5xl font-bold text-off-white mb-4 max-w-2xl">
-              Experience Luxury Redefined
+              Dressed With Purpose
             </h3>
             <p className="text-off-white/70 text-lg mb-8 max-w-2xl">
-              Join our exclusive community and get early access to new collections, special offers, and styling tips.
+              Effortless, refined, and enduring — pieces made for the woman who moves through her day with quiet confidence.
             </p>
             <Button href="/shop" variant="light" size="lg" className="px-10">
               Start Shopping

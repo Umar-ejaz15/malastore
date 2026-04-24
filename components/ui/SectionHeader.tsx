@@ -15,7 +15,7 @@ export function SectionHeader({ eyebrow, title, align = 'center', className = ''
           {eyebrow}
         </span>
       )}
-      <h2 className="font-display text-3xl md:text-4xl text-brown italic leading-tight">
+      <h2 className="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">
         {title}
       </h2>
       <div

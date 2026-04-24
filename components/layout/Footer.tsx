@@ -1,20 +1,15 @@
 import Link from 'next/link'
 
 const COLLECTIONS = [
-  { label: 'Luxury Lawn',       href: '/shop?category=luxury-lawn' },
-  { label: 'Unstitched Summer', href: '/shop?category=unstitched-summer' },
-  { label: 'Formals',           href: '/shop?category=formals' },
-  { label: 'Ready To Wear',     href: '/shop?category=ready-to-wear' },
-  { label: 'Bridal',            href: '/shop?category=bridal' },
-  { label: 'Sale',              href: '/shop?filter=sale' },
+  { label: 'New Arrivals',  href: '/shop?filter=new' },
+  { label: 'Collections',  href: '/shop' },
+  { label: 'Ready to Wear', href: '/shop?category=ready-to-wear' },
 ]
 
 const INFO = [
-  { label: 'About Malā',          href: '/about' },
-  { label: 'Size Guide',          href: '/about#size-guide' },
-  { label: 'Care Instructions',   href: '/about#care' },
-  { label: 'Sustainability',      href: '/about#sustainability' },
-  { label: 'Careers',             href: '/about#careers' },
+  { label: 'About Us',           href: '/about' },
+  { label: 'Size Guide',         href: '/about#size-guide' },
+  { label: 'Care Instructions',  href: '/about#care' },
 ]
 
 const SUPPORT = [
@@ -44,7 +39,7 @@ function FooterLinks({ links }: { links: { label: string; href: string }[] }) {
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-navy to-charcoal text-off-white mt-auto">
+    <footer className="bg-linear-to-b from-navy to-charcoal text-off-white mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
         
         {/* Main footer content */}
@@ -56,7 +51,7 @@ export function Footer() {
               Malā
             </Link>
             <p className="font-body text-sm text-grey-light/80 leading-relaxed max-w-xs mb-8">
-              Celebrating the art of Pakistani fashion — crafted with heritage, worn with pride. Timeless elegance for the modern woman.
+              Ready-to-wear for the woman who values simplicity, yet refuses to be overlooked. Quiet confidence, intentional design.
             </p>
             <div className="flex gap-4">
               {[
@@ -99,7 +94,7 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent mb-8" />
+        <div className="h-px bg-linear-to-r from-transparent via-gold/20 to-transparent mb-8" />
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">

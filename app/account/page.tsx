@@ -1,49 +1,45 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 type Tab = 'login' | 'register'
+
+const inputClass = 'w-full border border-grey-light bg-white text-navy font-body text-sm focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/10 transition-colors px-4 py-3 rounded-lg'
+const labelClass = 'font-ui text-[10px] uppercase tracking-widest text-grey block mb-1.5'
 
 export default function AccountPage() {
   const [tab, setTab] = useState<Tab>('login')
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
   const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '', confirm: '' })
 
-  const handleLogin = (e: React.FormEvent) => e.preventDefault()
-  const handleRegister = (e: React.FormEvent) => e.preventDefault()
-
-  const inputClass = 'w-full border border-beige bg-ivory text-brown font-body focus:outline-none focus:border-gold/70 transition-colors px-4 py-3'
+  const handleLogin = (e: { preventDefault(): void }) => e.preventDefault()
+  const handleRegister = (e: { preventDefault(): void }) => e.preventDefault()
 
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-20">
+    <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-20 bg-beige/20">
 
-      {/* Logo */}
-      <div className="mb-10 text-center">
-        <p className="font-display italic text-3xl text-brown">
-          Mal<span className="text-gold-dark">ā</span>
-        </p>
-        <p className="font-ui text-brown-light mt-1" style={{ fontSize: 10, letterSpacing: '0.3em' }}>
-          MEMBER ACCESS
-        </p>
+      <div className="mb-8 text-center">
+        <Link href="/" className="font-display text-3xl font-semibold text-navy inline-block">
+          Mal<span className="text-gold">ā</span>
+        </Link>
+        <p className="font-ui text-grey text-[10px] tracking-[0.3em] uppercase mt-1">Member Access</p>
       </div>
 
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-grey-light p-8">
 
         {/* Tab switcher */}
-        <div className="flex border-b border-beige mb-8">
+        <div className="flex border-b border-grey-light mb-7">
           {(['login', 'register'] as Tab[]).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`flex-1 py-3 font-ui transition-colors relative ${
-                tab === t ? 'text-brown' : 'text-brown-light hover:text-brown'
+              className={`flex-1 py-2.5 font-ui text-[11px] uppercase tracking-widest transition-colors relative ${
+                tab === t ? 'text-navy' : 'text-grey hover:text-navy'
               }`}
-              style={{ fontSize: 11, letterSpacing: '0.2em' }}
             >
-              {t === 'login' ? 'SIGN IN' : 'REGISTER'}
-              {tab === t && (
-                <span className="absolute bottom-0 left-0 right-0 h-px bg-gold" />
-              )}
+              {t === 'login' ? 'Sign In' : 'Register'}
+              {tab === t && <span className="absolute bottom-0 left-0 right-0 h-px bg-gold" />}
             </button>
           ))}
         </div>
@@ -51,68 +47,33 @@ export default function AccountPage() {
         {/* Login */}
         {tab === 'login' && (
           <form onSubmit={handleLogin} className="flex flex-col gap-5">
-            <h1 className="font-display italic text-2xl text-brown text-center mb-1">Welcome Back</h1>
+            <h1 className="font-display text-2xl font-semibold text-navy text-center mb-1">Welcome Back</h1>
 
             <div>
-              <label className="font-ui text-brown-light block mb-1.5" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-                EMAIL
-              </label>
-              <input
-                type="email"
-                value={loginForm.email}
-                onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-                required
-                className={inputClass}
-                style={{ fontSize: 14 }}
-                placeholder="your@email.com"
-              />
+              <label className={labelClass}>Email</label>
+              <input type="email" value={loginForm.email} onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })} required className={inputClass} placeholder="your@email.com"/>
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-1.5">
-                <label className="font-ui text-brown-light" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-                  PASSWORD
-                </label>
-                <button
-                  type="button"
-                  className="font-ui text-brown-light hover:text-gold transition-colors"
-                  style={{ fontSize: 10, letterSpacing: '0.12em' }}
-                >
-                  Forgot password?
-                </button>
+                <label className={labelClass}>Password</label>
+                <button type="button" className="font-ui text-[10px] text-grey hover:text-gold transition-colors">Forgot password?</button>
               </div>
-              <input
-                type="password"
-                value={loginForm.password}
-                onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                required
-                className={inputClass}
-                style={{ fontSize: 14 }}
-                placeholder="••••••••"
-              />
+              <input type="password" value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} required className={inputClass} placeholder="••••••••"/>
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-brown text-mala-white font-ui font-semibold py-4 hover:bg-brown-mid transition-colors duration-300 mt-1"
-              style={{ fontSize: 11, letterSpacing: '0.22em' }}
-            >
-              SIGN IN
+            <button type="submit" className="w-full bg-navy text-white font-ui text-xs font-semibold uppercase tracking-widest py-3.5 rounded-lg hover:bg-charcoal transition-colors mt-1">
+              Sign In
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-beige" />
-              <span className="font-ui text-sand-dark" style={{ fontSize: 10, letterSpacing: '0.2em' }}>OR</span>
-              <div className="flex-1 h-px bg-beige" />
+              <div className="flex-1 h-px bg-grey-light" />
+              <span className="font-ui text-grey text-[10px] tracking-widest">OR</span>
+              <div className="flex-1 h-px bg-grey-light" />
             </div>
 
-            <button
-              type="button"
-              onClick={() => setTab('register')}
-              className="w-full border border-beige text-brown font-ui py-4 hover:border-brown transition-colors"
-              style={{ fontSize: 11, letterSpacing: '0.2em' }}
-            >
-              CREATE ACCOUNT
+            <button type="button" onClick={() => setTab('register')} className="w-full border border-grey-light text-navy font-ui text-xs uppercase tracking-widest py-3.5 rounded-lg hover:border-navy transition-colors">
+              Create Account
             </button>
           </form>
         )}
@@ -120,91 +81,42 @@ export default function AccountPage() {
         {/* Register */}
         {tab === 'register' && (
           <form onSubmit={handleRegister} className="flex flex-col gap-5">
-            <h1 className="font-display italic text-2xl text-brown text-center mb-1">
-              Join Mal<span className="text-gold-dark">ā</span>
+            <h1 className="font-display text-2xl font-semibold text-navy text-center mb-1">
+              Join Mal<span className="text-gold">ā</span>
             </h1>
 
             <div>
-              <label className="font-ui text-brown-light block mb-1.5" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-                FULL NAME
-              </label>
-              <input
-                type="text"
-                value={registerForm.name}
-                onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })}
-                required
-                className={inputClass}
-                style={{ fontSize: 14 }}
-                placeholder="Ayesha Khan"
-              />
+              <label className={labelClass}>Full Name</label>
+              <input type="text" value={registerForm.name} onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })} required className={inputClass} placeholder="Ayesha Khan"/>
             </div>
 
             <div>
-              <label className="font-ui text-brown-light block mb-1.5" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-                EMAIL
-              </label>
-              <input
-                type="email"
-                value={registerForm.email}
-                onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-                required
-                className={inputClass}
-                style={{ fontSize: 14 }}
-                placeholder="your@email.com"
-              />
+              <label className={labelClass}>Email</label>
+              <input type="email" value={registerForm.email} onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })} required className={inputClass} placeholder="your@email.com"/>
             </div>
 
             <div>
-              <label className="font-ui text-brown-light block mb-1.5" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-                PASSWORD
-              </label>
-              <input
-                type="password"
-                value={registerForm.password}
-                onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-                required
-                className={inputClass}
-                style={{ fontSize: 14 }}
-                placeholder="••••••••"
-              />
+              <label className={labelClass}>Password</label>
+              <input type="password" value={registerForm.password} onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })} required className={inputClass} placeholder="••••••••"/>
             </div>
 
             <div>
-              <label className="font-ui text-brown-light block mb-1.5" style={{ fontSize: 10, letterSpacing: '0.2em' }}>
-                CONFIRM PASSWORD
-              </label>
-              <input
-                type="password"
-                value={registerForm.confirm}
-                onChange={(e) => setRegisterForm({ ...registerForm, confirm: e.target.value })}
-                required
-                className={inputClass}
-                style={{ fontSize: 14 }}
-                placeholder="••••••••"
-              />
+              <label className={labelClass}>Confirm Password</label>
+              <input type="password" value={registerForm.confirm} onChange={(e) => setRegisterForm({ ...registerForm, confirm: e.target.value })} required className={inputClass} placeholder="••••••••"/>
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-gold text-brown font-ui font-bold py-4 hover:bg-gold-dark transition-colors duration-300 mt-1"
-              style={{ fontSize: 11, letterSpacing: '0.22em' }}
-            >
-              CREATE ACCOUNT
+            <button type="submit" className="w-full bg-gold text-navy font-ui text-xs font-bold uppercase tracking-widest py-3.5 rounded-lg hover:bg-gold-dark transition-colors mt-1">
+              Create Account
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-beige" />
-              <span className="font-ui text-sand-dark" style={{ fontSize: 10, letterSpacing: '0.2em' }}>OR</span>
-              <div className="flex-1 h-px bg-beige" />
+              <div className="flex-1 h-px bg-grey-light" />
+              <span className="font-ui text-grey text-[10px] tracking-widest">OR</span>
+              <div className="flex-1 h-px bg-grey-light" />
             </div>
 
-            <button
-              type="button"
-              onClick={() => setTab('login')}
-              className="w-full border border-beige text-brown font-ui py-4 hover:border-brown transition-colors"
-              style={{ fontSize: 11, letterSpacing: '0.2em' }}
-            >
-              SIGN IN INSTEAD
+            <button type="button" onClick={() => setTab('login')} className="w-full border border-grey-light text-navy font-ui text-xs uppercase tracking-widest py-3.5 rounded-lg hover:border-navy transition-colors">
+              Sign In Instead
             </button>
           </form>
         )}
