@@ -107,13 +107,16 @@ export function CartSidebar() {
               <span className="font-ui text-xs uppercase tracking-wider text-grey">Subtotal</span>
               <span className="font-body text-sm text-navy">Rs. {total.toLocaleString('en-PK')}</span>
             </div>
-            <div className="flex justify-between mb-4">
+            <div className="flex justify-between items-start mb-1">
               <span className="font-ui text-xs uppercase tracking-wider text-grey">Shipping</span>
-              <span className="font-ui text-xs font-semibold text-gold uppercase tracking-wider">Free</span>
+              <div className="text-right">
+                <span className="font-body text-sm text-navy block">Rs. 250</span>
+                <span className="font-ui text-[9px] text-gold uppercase tracking-wider">Free on online payment</span>
+              </div>
             </div>
-            <div className="flex justify-between mb-5 pt-3 border-t border-grey-light">
-              <span className="font-ui text-xs uppercase tracking-wider font-semibold text-navy">Total</span>
-              <span className="font-display text-lg font-semibold text-navy">Rs. {total.toLocaleString('en-PK')}</span>
+            <div className="flex justify-between mb-5 pt-3 border-t border-grey-light mt-2">
+              <span className="font-ui text-xs uppercase tracking-wider font-semibold text-navy">Est. Total</span>
+              <span className="font-display text-lg font-semibold text-navy">Rs. {(total + 250).toLocaleString('en-PK')}</span>
             </div>
             <Link
               href="/checkout"

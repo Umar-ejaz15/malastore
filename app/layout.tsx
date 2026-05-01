@@ -21,9 +21,14 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'MALA By Kashmala — Ready-to-Wear Pakistani Fashion',
+  title: 'Mala By Kashmala — Ready-to-Wear Pakistani Fashion',
   description:
-    'MALA By Kashmala — clean silhouettes, thoughtful tailoring, and premium fabrics. Ready-to-wear collections for the modern Pakistani woman. Founded 2026.',
+    'Mala By Kashmala — clean silhouettes, thoughtful tailoring, and premium fabrics. Ready-to-wear collections for the modern Pakistani woman. Founded 2026.',
+  icons: {
+    icon: '/logo.jpeg',
+    shortcut: '/logo.jpeg',
+    apple: '/logo.jpeg',
+  },
 }
 
 export default function RootLayout({

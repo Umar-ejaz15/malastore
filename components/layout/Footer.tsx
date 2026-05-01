@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const COLLECTIONS = [
   { label: 'New Arrivals',  href: '/shop?filter=new' },
@@ -47,8 +48,10 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="font-display text-3xl font-bold text-gold leading-none inline-block mb-6">
-              Malā
+            <Link href="/" className="inline-block mb-6" aria-label="Mala By Kashmala — Home">
+              <div className="relative" style={{ width: 160, height: 64 }}>
+                <Image src="/logo.jpeg" alt="Mala By Kashmala" fill style={{ objectFit: 'contain' }} />
+              </div>
             </Link>
             <p className="font-body text-sm text-grey-light/80 leading-relaxed max-w-xs mb-8">
               Ready-to-wear for the woman who values simplicity, yet refuses to be overlooked. Quiet confidence, intentional design.
@@ -99,7 +102,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-ui text-xs text-grey-light/60 tracking-wider">
-            &copy; 2026 Malā. All rights reserved. Crafted with &hearts; for South Asian fashion.
+            &copy; 2026 Mala By Kashmala. All rights reserved. Crafted with &hearts; for South Asian fashion.
           </p>
           <div className="flex gap-8">
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((label) => (

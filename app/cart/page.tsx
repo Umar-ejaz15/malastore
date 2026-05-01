@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
-import { PlaceholderImage } from '@/components/ui/PlaceholderImage'
+import { ProductImage } from '@/components/ui/ProductImage'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { Button } from '@/components/ui/Button'
 
@@ -52,7 +52,12 @@ export default function CartPage() {
           {items.map((item) => (
             <div key={`${item.product.id}-${item.size}`} className="flex gap-5 py-6">
               <div className="w-24 aspect-3/4 shrink-0 overflow-hidden rounded-lg bg-beige">
-                <PlaceholderImage variant={item.product.imgVariant} />
+                <ProductImage
+                  sanityImage={item.product.sanityImages?.[0]}
+                  fallbackVariant={item.product.imgVariant}
+                  alt={item.product.name}
+                  sizes="96px"
+                />
               </div>
 
               <div className="flex-1 flex flex-col gap-1 min-w-0">
@@ -95,9 +100,12 @@ export default function CartPage() {
               <span className="font-ui text-xs uppercase tracking-widest text-grey">Subtotal</span>
               <span className="font-body text-sm text-navy">Rs. {total.toLocaleString('en-PK')}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-start">
               <span className="font-ui text-xs uppercase tracking-widest text-grey">Shipping</span>
-              <span className="font-ui text-xs font-semibold text-gold uppercase tracking-wider">Free</span>
+              <div className="text-right">
+                <span className="font-body text-sm text-navy block">Rs. 250</span>
+                <span className="font-ui text-[9px] text-gold uppercase tracking-wider">Free on JazzCash / Bank</span>
+              </div>
             </div>
             {promoApplied && (
               <div className="flex justify-between text-gold">

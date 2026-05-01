@@ -1,13 +1,21 @@
-const ITEMS = [
-  'Free Shipping Nationwide',
+import { getSiteSettings } from '@/lib/data'
+
+const FALLBACK_ITEMS = [
+  'Free Delivery on JazzCash & Bank Transfer',
   'New Arrivals — Shop Now',
+  'Delivery Charges Rs. 250 on Cash on Delivery',
   'Ready to Wear Collections',
   'Thoughtful Tailoring. Premium Fabrics.',
-  'MALA By Kashmala — Founded 2026',
+  'Mala By Kashmala — Founded 2026',
 ]
 
-export function AnnouncementBar() {
-  const segments = ITEMS.map((item, i) => (
+export async function AnnouncementBar() {
+  const settings = await getSiteSettings()
+  const items = (settings.announcementMessages?.length ?? 0) > 0
+    ? settings.announcementMessages!
+    : FALLBACK_ITEMS
+
+  const segments = items.map((item, i) => (
     <span key={i} className="inline-flex items-center gap-6 px-6">
       {item}
       <span className="text-gold opacity-60" aria-hidden="true">◆</span>

@@ -5,17 +5,24 @@ import { CategoryCard } from '@/components/store/CategoryCard'
 import { LookbookCard } from '@/components/store/LookbookCard'
 import { ProductGrid } from '@/components/store/ProductGrid'
 import { NewsletterSection } from '@/components/store/NewsletterSection'
-import { categories, getFeaturedProducts } from '@/lib/data'
+import { getFeaturedProducts, getCategories, getLookbookItems } from '@/lib/data'
+import type { LookbookItem } from '@/types'
 
-export default function HomePage() {
-  const featured = getFeaturedProducts(5)
+const FALLBACK_LOOKBOOK: LookbookItem[] = [
+  { title: 'The Art of Embroidery',  imgVariant: 'dark-1', href: '/shop' },
+  { title: 'Summer in Lahore',       imgVariant: 'dark-2', href: '/shop' },
+  { title: 'Mughal Garden Mornings', imgVariant: 'dark-3', href: '/shop' },
+  { title: 'The Eid Edit 2026',      imgVariant: 'dark-4', href: '/shop' },
+]
 
-  const lookbookItems = [
-    { title: 'The Art of Embroidery',   imgVariant: 'dark-1' },
-    { title: 'Summer in Lahore',        imgVariant: 'dark-2' },
-    { title: 'Mughal Garden Mornings',  imgVariant: 'dark-3' },
-    { title: 'The Eid Edit 2026',       imgVariant: 'dark-4' },
-  ]
+export default async function HomePage() {
+  const [featured, categories, lookbookRaw] = await Promise.all([
+    getFeaturedProducts(5),
+    getCategories(),
+    getLookbookItems(),
+  ])
+
+  const lookbookItems = lookbookRaw.length > 0 ? lookbookRaw : FALLBACK_LOOKBOOK
 
   return (
     <>
@@ -122,7 +129,12 @@ export default function HomePage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 md:gap-2">
           {lookbookItems.map((item, i) => (
             <div key={item.title} className="animate-scale-up" style={{ animationDelay: `${i * 100}ms` }}>
-              <LookbookCard title={item.title} imgVariant={item.imgVariant} href="/shop" />
+              <LookbookCard
+                title={item.title}
+                imgVariant={item.imgVariant}
+                sanityImage={item.image}
+                href={item.href ?? '/shop'}
+              />
             </div>
           ))}
         </div>
@@ -157,7 +169,7 @@ export default function HomePage() {
         <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-navy via-charcoal to-slate p-12 md:p-20">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -mr-48 -mt-48 blur-3xl" />
-          
+
           <div className="relative z-10">
             <h3 className="font-display text-4xl md:text-5xl font-bold text-off-white mb-4 max-w-2xl">
               Dressed With Purpose

@@ -1,13 +1,15 @@
 import Link from 'next/link'
-import { PlaceholderImage } from '@/components/ui/PlaceholderImage'
+import { ProductImage } from '@/components/ui/ProductImage'
+import type { SanityImage } from '@/types'
 
 interface LookbookCardProps {
   title: string
-  imgVariant: string
+  imgVariant?: string
+  sanityImage?: SanityImage
   href?: string
 }
 
-export function LookbookCard({ title, imgVariant, href = '/shop' }: LookbookCardProps) {
+export function LookbookCard({ title, imgVariant = 'dark-1', sanityImage, href = '/shop' }: LookbookCardProps) {
   return (
     <Link
       href={href}
@@ -16,7 +18,12 @@ export function LookbookCard({ title, imgVariant, href = '/shop' }: LookbookCard
     >
       {/* Image fills card */}
       <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.08]">
-        <PlaceholderImage variant={imgVariant} />
+        <ProductImage
+          sanityImage={sanityImage}
+          fallbackVariant={imgVariant}
+          alt={title}
+          sizes="(max-width: 640px) 50vw, 25vw"
+        />
       </div>
 
       {/* Persistent gradient overlay */}

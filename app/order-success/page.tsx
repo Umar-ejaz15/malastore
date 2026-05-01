@@ -21,7 +21,8 @@ export default function OrderSuccessPage() {
       <p className="font-ui text-gold text-[10px] tracking-[0.35em] uppercase mb-4">Order Confirmed</p>
 
       <h1 className="font-display text-4xl md:text-5xl font-semibold text-navy leading-tight mb-3">
-        Thank you for shopping with Mal<span className="text-gold">ā</span>
+        Thank you for shopping with<br />
+        <span className="text-gold">Mala By Kashmala</span>
       </h1>
 
       <p className="font-body text-grey text-sm mb-8 leading-relaxed">

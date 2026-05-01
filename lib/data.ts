@@ -1,290 +1,163 @@
-import type { Category, Product } from '@/types'
+import { client } from '@/lib/sanity/client'
+import {
+  ALL_PRODUCTS_QUERY,
+  PRODUCT_BY_SLUG_QUERY,
+  PRODUCTS_BY_CATEGORY_QUERY,
+  FEATURED_PRODUCTS_QUERY,
+  RELATED_PRODUCTS_QUERY,
+  ALL_CATEGORIES_QUERY,
+  LOOKBOOK_QUERY,
+  SITE_SETTINGS_QUERY,
+} from '@/lib/sanity/queries'
+import type { Product, Category, LookbookItem, SiteSettings, SanityImage } from '@/types'
 
-// Sanity integration: replace these with GROQ queries
+// Palette fallbacks — deterministic from category
+const CATEGORY_VARIANTS: Record<string, string> = {
+  'luxury-lawn': 'warm-1',
+  'ready-to-wear': 'warm-5',
+  'formals': 'dark-1',
+}
+const FALLBACK_VARIANTS = ['warm-1', 'warm-2', 'warm-3', 'warm-4', 'warm-5', 'warm-6', 'warm-7', 'warm-8', 'dark-1', 'dark-2']
 
-export const categories: Category[] = [
-  {
-    id: 'cat-1',
-    slug: 'luxury-lawn',
-    name: 'Luxury Lawn',
-    description: 'Ready-to-wear lawn suits crafted with care for the discerning woman',
-    imgVariant: 'warm-1',
-  },
-  {
-    id: 'cat-2',
-    slug: 'ready-to-wear',
-    name: 'Ready to Wear',
-    description: 'Effortless, refined, and enduring — pieces made for the modern Pakistani woman',
-    imgVariant: 'warm-5',
-  },
-  {
-    id: 'cat-3',
-    slug: 'formals',
-    name: 'Formals',
-    description: 'Elegant formal wear for every special occasion',
-    imgVariant: 'dark-1',
-  },
-]
-
-export const products: Product[] = [
-  // Luxury Lawn
-  {
-    id: 'p-001',
-    slug: 'embroidered-lawn-ell-9133',
-    name: 'Embroidered Lawn ELL-9133',
-    sku: 'ELL-9133',
-    price: 7800,
-    originalPrice: 9500,
-    category: 'Luxury Lawn',
-    categorySlug: 'luxury-lawn',
-    description: 'A refined three-piece lawn suit featuring delicate machine embroidery on the shirt front, paired with a printed dupatta and plain trouser. Perfect for daytime gatherings.',
-    fabric: 'Premium Lawn',
-    pieces: 3,
-    isNew: true,
-    isFeatured: true,
-    imgVariant: 'warm-1',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-002',
-    slug: 'floral-printed-lawn-ell-9240',
-    name: 'Floral Printed Lawn ELL-9240',
-    sku: 'ELL-9240',
-    price: 6200,
-    category: 'Luxury Lawn',
-    categorySlug: 'luxury-lawn',
-    description: 'Delicate floral motifs rendered in soft pastels on ultra-fine lawn. This three-piece includes a digitally printed shirt, coordinated dupatta, and dyed trouser.',
-    fabric: 'Fine Lawn',
-    pieces: 3,
-    isFeatured: true,
-    imgVariant: 'warm-2',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'p-003',
-    slug: 'hand-block-lawn-ell-9358',
-    name: 'Hand Block Lawn ELL-9358',
-    sku: 'ELL-9358',
-    price: 8500,
-    category: 'Luxury Lawn',
-    categorySlug: 'luxury-lawn',
-    description: 'Traditional hand-block printing meets contemporary silhouettes. Each print is unique, celebrating the heritage of Pakistani textile artisans.',
-    fabric: 'Swiss Lawn',
-    pieces: 3,
-    isNew: true,
-    imgVariant: 'warm-3',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-004',
-    slug: 'gul-e-bahar-lawn-ell-9401',
-    name: 'Gul-e-Bahar Lawn ELL-9401',
-    sku: 'ELL-9401',
-    price: 9200,
-    originalPrice: 11000,
-    category: 'Luxury Lawn',
-    categorySlug: 'luxury-lawn',
-    description: 'Named after the spring bloom, this piece features a digitally printed shirt with delicate floral embroidery at the neckline and sleeves, finished with a matching chiffon dupatta.',
-    fabric: 'Lawn + Chiffon Dupatta',
-    pieces: 3,
-    isRestocked: true,
-    isFeatured: true,
-    imgVariant: 'warm-4',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-005',
-    slug: 'summer-bloom-lawn-ell-9512',
-    name: 'Summer Bloom Lawn ELL-9512',
-    sku: 'ELL-9512',
-    price: 7100,
-    category: 'Luxury Lawn',
-    categorySlug: 'luxury-lawn',
-    description: 'A fresh interpretation of classic lawn prints with bold geometric patterns and floral accents in a soft, wearable palette.',
-    fabric: 'Premium Lawn',
-    pieces: 3,
-    imgVariant: 'warm-5',
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-
-  // Ready to Wear
-  {
-    id: 'p-016',
-    slug: 'linen-co-ord-rtw-4411',
-    name: 'Linen Co-Ord RTW-4411',
-    sku: 'RTW-4411',
-    price: 8900,
-    category: 'Ready to Wear',
-    categorySlug: 'ready-to-wear',
-    description: 'Effortlessly chic linen co-ordinate — a relaxed kurta paired with wide-leg trousers. Minimal kachha dhaga embroidery at the neckline adds quiet refinement.',
-    fabric: 'Premium Linen',
-    pieces: 2,
-    isNew: true,
-    isFeatured: true,
-    imgVariant: 'warm-5',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-017',
-    slug: 'printed-pret-kurta-rtw-4523',
-    name: 'Printed Pret Kurta RTW-4523',
-    sku: 'RTW-4523',
-    price: 5400,
-    category: 'Ready to Wear',
-    categorySlug: 'ready-to-wear',
-    description: 'A versatile everyday kurta in digital floral print on soft cotton. The A-line silhouette flatters all figures — clean and enduring.',
-    fabric: 'Cotton Lawn',
-    pieces: 1,
-    imgVariant: 'warm-6',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'p-018',
-    slug: 'fusion-pret-set-rtw-4678',
-    name: 'Fusion Pret Set RTW-4678',
-    sku: 'RTW-4678',
-    price: 11200,
-    originalPrice: 13500,
-    category: 'Ready to Wear',
-    categorySlug: 'ready-to-wear',
-    description: 'A cropped kameez with wide palazzo trousers in a block-print earth-tone palette. Thoughtful tailoring, effortless to wear.',
-    fabric: 'Cotton Satin',
-    pieces: 2,
-    isRestocked: true,
-    isFeatured: true,
-    imgVariant: 'warm-7',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-019',
-    slug: 'embellished-pret-top-rtw-4801',
-    name: 'Embellished Pret Top RTW-4801',
-    sku: 'RTW-4801',
-    price: 6800,
-    category: 'Ready to Wear',
-    categorySlug: 'ready-to-wear',
-    description: 'A semi-formal top with delicate hand-embellished details at the collar and cuffs. Premium fabric, restrained design — from day to evening.',
-    fabric: 'Tissue + Silk Blend',
-    pieces: 1,
-    isNew: true,
-    imgVariant: 'warm-8',
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'p-020',
-    slug: 'classic-pret-suit-rtw-4934',
-    name: 'Classic Pret Suit RTW-4934',
-    sku: 'RTW-4934',
-    price: 9600,
-    category: 'Ready to Wear',
-    categorySlug: 'ready-to-wear',
-    description: 'The quintessential ready-to-wear suit for the modern Pakistani woman. Fine cotton with contrast piping — refined simplicity at its best.',
-    fabric: 'Fine Cotton',
-    pieces: 3,
-    isFeatured: true,
-    imgVariant: 'blush',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-
-  // Formals
-  {
-    id: 'p-011',
-    slug: 'kamdani-formal-fml-1122',
-    name: 'Kamdani Formal FML-1122',
-    sku: 'FML-1122',
-    price: 18000,
-    category: 'Formals',
-    categorySlug: 'formals',
-    description: 'A statement piece for cherished occasions — kamdani embellishment on rich fabric with a matching dupatta. Ready-to-wear formal.',
-    fabric: 'Velvet + Net Dupatta',
-    pieces: 3,
-    isNew: true,
-    isFeatured: true,
-    imgVariant: 'dark-1',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-012',
-    slug: 'resham-gharara-fml-1258',
-    name: 'Resham Gharara FML-1258',
-    sku: 'FML-1258',
-    price: 15500,
-    originalPrice: 18000,
-    category: 'Formals',
-    categorySlug: 'formals',
-    description: 'Resham embroidery on a gharara set — a nod to traditional craftsmanship with a modern silhouette. Ready-to-wear, not stitched to order.',
-    fabric: 'Raw Silk',
-    pieces: 2,
-    isFeatured: true,
-    imgVariant: 'dark-2',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'p-013',
-    slug: 'chiffon-formal-fml-1374',
-    name: 'Chiffon Formal FML-1374',
-    sku: 'FML-1374',
-    price: 13200,
-    category: 'Formals',
-    categorySlug: 'formals',
-    description: 'Flowing chiffon with gulkari embroidery across the front panel and sleeves. Elegant, sophisticated, ready to wear.',
-    fabric: 'Chiffon + Silk Lining',
-    pieces: 3,
-    isRestocked: true,
-    imgVariant: 'dark-3',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-  },
-  {
-    id: 'p-014',
-    slug: 'angrakha-formal-fml-1490',
-    name: 'Angrakha Formal FML-1490',
-    sku: 'FML-1490',
-    price: 16200,
-    category: 'Formals',
-    categorySlug: 'formals',
-    description: 'The Angrakha silhouette in finest handloom silk. Gota patti borders frame the crossover front — regal and timeless.',
-    fabric: 'Pure Handloom Silk',
-    pieces: 2,
-    isNew: true,
-    imgVariant: 'cool-3',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'p-015',
-    slug: 'noor-e-shab-formal-fml-1605',
-    name: 'Noor-e-Shab Formal FML-1605',
-    sku: 'FML-1605',
-    price: 17500,
-    originalPrice: 20000,
-    category: 'Formals',
-    categorySlug: 'formals',
-    description: 'Named for the light of night — sequin and crystal embellishments on midnight-toned fabric. Pakistani eveningwear at its finest.',
-    fabric: 'Organza + Silk Base',
-    pieces: 3,
-    isFeatured: true,
-    imgVariant: 'cool-4',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  },
-]
-
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug)
+function fallbackVariant(categorySlug: string, index = 0): string {
+  return CATEGORY_VARIANTS[categorySlug] ?? FALLBACK_VARIANTS[index % FALLBACK_VARIANTS.length]
 }
 
-export function getProductsByCategory(categorySlug: string): Product[] {
-  return products.filter((p) => p.categorySlug === categorySlug)
+// ─── Raw Sanity shapes ────────────────────────────────────────────────────────
+
+interface RawProduct {
+  _id: string
+  name: string
+  slug: string
+  sku: string
+  price: number
+  originalPrice?: number
+  category?: { name: string; slug: string; _id?: string }
+  description?: string
+  fabric?: string
+  pieces?: number
+  occasions?: string[]
+  isNew?: boolean
+  isRestocked?: boolean
+  isFeatured?: boolean
+  images?: SanityImage[]
+  videoUrl?: string
+  sizeStock?: { size: string; stock: number }[]
 }
 
-export function getFeaturedProducts(limit = 5): Product[] {
-  return products.filter((p) => p.isFeatured).slice(0, limit)
+interface RawCategory {
+  _id: string
+  name: string
+  slug: string
+  description?: string
+  image?: SanityImage
 }
 
-export function getRelatedProducts(product: Product, limit = 4): Product[] {
-  return products
-    .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
-    .slice(0, limit)
+// ─── Transformers ─────────────────────────────────────────────────────────────
+
+function toProduct(raw: RawProduct, index = 0): Product {
+  const categorySlug = raw.category?.slug ?? ''
+  const availableSizes = (raw.sizeStock ?? [])
+    .filter((ss) => ss.stock > 0)
+    .map((ss) => ss.size)
+
+  return {
+    id: raw._id,
+    slug: raw.slug,
+    name: raw.name,
+    sku: raw.sku,
+    price: raw.price,
+    originalPrice: raw.originalPrice,
+    category: raw.category?.name ?? '',
+    categorySlug,
+    categoryId: raw.category?._id,
+    description: raw.description ?? '',
+    fabric: raw.fabric,
+    pieces: raw.pieces,
+    occasions: raw.occasions,
+    isNew: raw.isNew,
+    isRestocked: raw.isRestocked,
+    isFeatured: raw.isFeatured,
+    imgVariant: fallbackVariant(categorySlug, index),
+    sanityImages: raw.images,
+    videoUrl: raw.videoUrl,
+    sizes: availableSizes.length > 0 ? availableSizes : [],
+    sizeStock: raw.sizeStock,
+  }
 }
 
-export function getNewArrivals(limit = 8): Product[] {
-  return products.filter((p) => p.isNew).slice(0, limit)
+function toCategory(raw: RawCategory, index = 0): Category {
+  const slug = raw.slug ?? ''
+  return {
+    id: raw._id,
+    slug,
+    name: raw.name,
+    description: raw.description,
+    imgVariant: CATEGORY_VARIANTS[slug] ?? FALLBACK_VARIANTS[index % FALLBACK_VARIANTS.length],
+    sanityImage: raw.image,
+  }
+}
+
+// ─── Fetch options ────────────────────────────────────────────────────────────
+
+const FETCH_OPTS = { next: { revalidate: 60 } }
+
+// ─── Public API ───────────────────────────────────────────────────────────────
+
+export async function getAllProducts(): Promise<Product[]> {
+  const raw = await client.fetch<RawProduct[]>(ALL_PRODUCTS_QUERY, {}, FETCH_OPTS)
+  return raw.map((r, i) => toProduct(r, i))
+}
+
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  const raw = await client.fetch<RawProduct | null>(PRODUCT_BY_SLUG_QUERY, { slug }, FETCH_OPTS)
+  return raw ? toProduct(raw) : null
+}
+
+export async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
+  const raw = await client.fetch<RawProduct[]>(PRODUCTS_BY_CATEGORY_QUERY, { categorySlug }, FETCH_OPTS)
+  return raw.map((r, i) => toProduct(r, i))
+}
+
+export async function getFeaturedProducts(limit = 5): Promise<Product[]> {
+  const raw = await client.fetch<RawProduct[]>(FEATURED_PRODUCTS_QUERY, { limit }, FETCH_OPTS)
+  return raw.map((r, i) => toProduct(r, i))
+}
+
+export async function getRelatedProducts(product: Product, limit = 4): Promise<Product[]> {
+  if (!product.categoryId) return []
+  const raw = await client.fetch<RawProduct[]>(
+    RELATED_PRODUCTS_QUERY,
+    { categoryId: product.categoryId, productId: product.id, limit },
+    FETCH_OPTS
+  )
+  return raw.map((r, i) => toProduct(r, i))
+}
+
+export async function getCategories(): Promise<Category[]> {
+  const raw = await client.fetch<RawCategory[]>(ALL_CATEGORIES_QUERY, {}, FETCH_OPTS)
+  return raw.map((r, i) => toCategory(r, i))
+}
+
+export async function getLookbookItems(): Promise<LookbookItem[]> {
+  const raw = await client.fetch<Array<{
+    _id: string
+    title: string
+    image?: SanityImage
+    href?: string
+    season?: string
+  }>>(LOOKBOOK_QUERY, {}, FETCH_OPTS)
+
+  return raw.map((r) => ({
+    _id: r._id,
+    title: r.title,
+    image: r.image,
+    href: r.href ?? '/shop',
+    season: r.season,
+  }))
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const raw = await client.fetch<SiteSettings | null>(SITE_SETTINGS_QUERY, {}, FETCH_OPTS)
+  return raw ?? {}
 }

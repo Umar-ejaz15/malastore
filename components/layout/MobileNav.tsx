@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect } from 'react'
 
 interface MobileNavProps {
@@ -35,7 +36,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[60] bg-navy/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-60 bg-navy/60 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -47,18 +48,16 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
-        className={`fixed top-0 left-0 z-[70] h-full w-[min(280px,85vw)] bg-white flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-70 h-full w-[min(280px,85vw)] bg-white flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-grey-light">
-          <Link
-            href="/"
-            onClick={onClose}
-            className="font-display text-xl font-bold text-navy leading-none"
-          >
-            Mal<span className="text-gold">ā</span>
+          <Link href="/" onClick={onClose} aria-label="Mala By Kashmala — Home">
+            <div className="relative" style={{ width: 110, height: 44 }}>
+              <Image src="/logo.jpeg" alt="Mala By Kashmala" fill style={{ objectFit: 'contain' }} />
+            </div>
           </Link>
           <button
             onClick={onClose}

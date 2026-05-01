@@ -1,7 +1,7 @@
 const features = [
   {
-    label: 'Free Shipping',
-    sub: 'Nationwide delivery',
+    label: 'Free Delivery',
+    sub: 'On JazzCash & Bank Transfer',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
         <path d="M1 3h15v13H1z"/><path d="M16 8h4l3 4v4h-7V8z"/>

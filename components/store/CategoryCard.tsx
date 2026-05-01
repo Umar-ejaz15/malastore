@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { PlaceholderImage } from '@/components/ui/PlaceholderImage'
+import { ProductImage } from '@/components/ui/ProductImage'
 import { Button } from '@/components/ui/Button'
 import type { Category } from '@/types'
 
@@ -11,7 +11,11 @@ export function CategoryCard({ category }: { category: Category }) {
         
         {/* Image */}
         <div className="w-full h-full transition-transform duration-700 ease-out group-hover:scale-105">
-          <PlaceholderImage variant={category.imgVariant} />
+          <ProductImage
+            sanityImage={category.sanityImage}
+            fallbackVariant={category.imgVariant}
+            alt={category.name}
+          />
         </div>
 
         {/* Gradient Overlay - Base */}

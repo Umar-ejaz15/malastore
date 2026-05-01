@@ -31,7 +31,7 @@ export function ProductActions({ product }: { product: Product }) {
     {
       id: 'shipping',
       label: 'Shipping & Returns',
-      content: 'Free shipping nationwide on all orders. International shipping available. Delivery within 3–5 business days across Pakistan. Returns and exchanges accepted within 7 days of delivery on unworn items in original packaging.',
+      content: 'Delivery charge Rs. 250 for Cash on Delivery. FREE delivery when you pay via JazzCash or Bank Transfer. Delivery within 3–5 business days across Pakistan.\n\nReturns and exchanges accepted within 7 days of delivery on unworn items in original packaging.',
     },
   ]
 

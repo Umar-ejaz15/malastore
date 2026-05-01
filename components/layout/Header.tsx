@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useCart } from '@/context/CartContext'
 import { useWishlist } from '@/context/WishlistContext'
 import { MobileNav } from './MobileNav'
@@ -58,26 +59,20 @@ export function Header() {
               </button>
 
               {/* Logo — desktop left, mobile hidden (shown in center) */}
-              <Link
-                href="/"
-                className={`hidden lg:block font-display text-2xl font-bold leading-none select-none transition-colors duration-300 ${
-                  isDark ? 'text-gold' : 'text-navy'
-                }`}
-              >
-                Malā
+              <Link href="/" className="hidden lg:block select-none" aria-label="Mala By Kashmala — Home">
+                <div className={`relative transition-all duration-300 ${isDark ? 'bg-white/95 rounded px-2 py-1' : ''}`} style={{ width: 130, height: 52 }}>
+                  <Image src="/logo.jpeg" alt="Mala By Kashmala" fill style={{ objectFit: 'contain' }} priority />
+                </div>
               </Link>
             </div>
 
             {/* ── CENTER: Logo (mobile/tablet) + Nav (desktop) ── */}
             <div className="flex-1 flex justify-center">
               {/* Logo — mobile/tablet only */}
-              <Link
-                href="/"
-                className={`lg:hidden font-display text-xl sm:text-2xl font-bold leading-none select-none transition-colors duration-300 ${
-                  isDark ? 'text-gold' : 'text-navy'
-                }`}
-              >
-                Malā
+              <Link href="/" className="lg:hidden select-none" aria-label="Mala By Kashmala — Home">
+                <div className={`relative transition-all duration-300 ${isDark ? 'bg-white/95 rounded px-1.5 py-0.5' : ''}`} style={{ width: 110, height: 44 }}>
+                  <Image src="/logo.jpeg" alt="Mala By Kashmala" fill style={{ objectFit: 'contain' }} priority />
+                </div>
               </Link>
 
               {/* Desktop nav */}
