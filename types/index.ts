@@ -17,6 +17,7 @@ export interface SiteSettings {
   announcementMessages?: string[]
   codDeliveryCharge?: number
   jazzcashNumber?: string
+  easypaisaNumber?: string
   bankDetails?: {
     bankName?: string
     accountTitle?: string

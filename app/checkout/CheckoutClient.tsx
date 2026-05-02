@@ -8,9 +8,8 @@ import { ProductImage } from '@/components/ui/ProductImage'
 import type { SiteSettings } from '@/types'
 
 type Step = 1 | 2 | 3
-type PaymentMethod = 'cod' | 'jazzcash' | 'bank'
+type PaymentMethod = 'jazzcash' | 'easypaisa'
 
-const SHIPPING_FEE = 250
 const provinces = ['Punjab', 'Sindh', 'KPK', 'Balochistan', 'Islamabad']
 
 const inputClass =
@@ -25,22 +24,15 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
   const [contact, setContact] = useState({ firstName: '', lastName: '', email: '', phone: '' })
   const [shipping, setShipping] = useState({ address: '', city: '', province: 'Punjab', postal: '' })
   const [payment, setPayment] = useState<{ method: PaymentMethod; transactionId: string }>({
-    method: 'cod',
+    method: 'jazzcash',
     transactionId: '',
   })
 
-  const jazzcashNumber = settings.jazzcashNumber ?? '0300-XXXXXXX'
-  const bankDetails = {
-    bank: settings.bankDetails?.bankName ?? 'Meezan Bank',
-    title: settings.bankDetails?.accountTitle ?? 'Mala By Kashmala',
-    account: settings.bankDetails?.accountNumber ?? 'XXXX-XXXXXXXXX-X',
-    iban: settings.bankDetails?.iban ?? 'PKXX MEZN XXXX XXXX XXXX XXXX',
-  }
-  const shippingFee = settings.codDeliveryCharge ?? SHIPPING_FEE
+  const jazzcashNumber  = settings.jazzcashNumber  ?? '0300-XXXXXXX'
+  const easypaisaNumber = settings.easypaisaNumber ?? '0300-XXXXXXX'
 
-  const isOnlinePayment = payment.method === 'jazzcash' || payment.method === 'bank'
-  const appliedShipping = isOnlinePayment ? 0 : shippingFee
-  const grandTotal = total + appliedShipping
+  // Both methods are online — free delivery always
+  const grandTotal = total
 
   const steps = [
     { n: 1, label: 'Contact' },
@@ -51,6 +43,8 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
   const handleNext = () => { if (step < 3) setStep((s) => (s + 1) as Step) }
   const handleBack = () => { if (step > 1) setStep((s) => (s - 1) as Step) }
   const handlePlaceOrder = () => { clearCart(); router.push('/order-success') }
+
+  const activeNumber = payment.method === 'jazzcash' ? jazzcashNumber : easypaisaNumber
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
@@ -145,26 +139,23 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
 
           {step === 3 && (
             <div>
-              <h2 className="font-display text-2xl font-semibold text-navy mb-6">Payment Method</h2>
+              <h2 className="font-display text-2xl font-semibold text-navy mb-2">Payment Method</h2>
+              <p className="font-body text-grey text-xs mb-6">All payments include free delivery.</p>
+
+              {/* Method selector */}
               <div className="flex flex-col gap-3 mb-6">
                 {([
                   {
-                    value: 'cod' as PaymentMethod,
-                    label: 'Cash on Delivery',
-                    sub: `Pay Rs. ${shippingFee.toLocaleString('en-PK')} delivery charge when your order arrives`,
-                    badge: null,
-                  },
-                  {
-                    value: 'jazzcash' as PaymentMethod,
+                    value: 'jazzcash'  as PaymentMethod,
                     label: 'JazzCash',
-                    sub: 'Instant mobile payment — get free delivery',
-                    badge: 'FREE DELIVERY',
+                    sub: 'Send via JazzCash mobile wallet',
+                    number: jazzcashNumber,
                   },
                   {
-                    value: 'bank' as PaymentMethod,
-                    label: 'Bank Transfer',
-                    sub: 'Transfer to our bank account — get free delivery',
-                    badge: 'FREE DELIVERY',
+                    value: 'easypaisa' as PaymentMethod,
+                    label: 'EasyPaisa',
+                    sub: 'Send via EasyPaisa mobile wallet',
+                    number: easypaisaNumber,
                   },
                 ] as const).map((opt) => (
                   <label key={opt.value} className={`flex items-start gap-4 p-4 border rounded-xl cursor-pointer transition-colors ${
@@ -181,11 +172,9 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <p className="font-ui text-xs font-semibold uppercase tracking-widest text-navy">{opt.label}</p>
-                        {opt.badge && (
-                          <span className="font-ui text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">
-                            {opt.badge}
-                          </span>
-                        )}
+                        <span className="font-ui text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">
+                          FREE DELIVERY
+                        </span>
                       </div>
                       <p className="font-body text-grey text-xs mt-0.5">{opt.sub}</p>
                     </div>
@@ -193,67 +182,43 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
                 ))}
               </div>
 
-              {/* JazzCash details */}
-              {payment.method === 'jazzcash' && (
-                <div className="bg-gold/5 border border-gold/20 rounded-xl p-5 mb-5">
-                  <p className="font-ui text-[10px] uppercase tracking-widest text-gold mb-3">Send Payment To</p>
-                  <div className="flex flex-col gap-1.5 mb-4">
-                    <div className="flex justify-between">
-                      <span className="font-ui text-[10px] uppercase tracking-wider text-grey">JazzCash Number</span>
-                      <span className="font-body text-sm font-semibold text-navy">{jazzcashNumber}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-ui text-[10px] uppercase tracking-wider text-grey">Account Name</span>
-                      <span className="font-body text-sm font-semibold text-navy">Mala By Kashmala</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-ui text-[10px] uppercase tracking-wider text-grey">Amount</span>
-                      <span className="font-body text-sm font-semibold text-navy">Rs. {total.toLocaleString('en-PK')}</span>
-                    </div>
+              {/* Payment instructions */}
+              <div className="bg-gold/5 border border-gold/20 rounded-xl p-5 mb-5">
+                <p className="font-ui text-[10px] uppercase tracking-widest text-gold mb-3">
+                  Send Payment To
+                </p>
+                <div className="flex flex-col gap-1.5 mb-4">
+                  <div className="flex justify-between">
+                    <span className="font-ui text-[10px] uppercase tracking-wider text-grey">
+                      {payment.method === 'jazzcash' ? 'JazzCash' : 'EasyPaisa'} Number
+                    </span>
+                    <span className="font-body text-sm font-semibold text-navy">{activeNumber}</span>
                   </div>
-                  <div>
-                    <label className={labelClass}>Transaction ID</label>
-                    <input
-                      type="text"
-                      value={payment.transactionId}
-                      onChange={(e) => setPayment({ ...payment, transactionId: e.target.value })}
-                      className={inputClass}
-                      placeholder="Enter JazzCash transaction ID"
-                    />
+                  <div className="flex justify-between">
+                    <span className="font-ui text-[10px] uppercase tracking-wider text-grey">Account Name</span>
+                    <span className="font-body text-sm font-semibold text-navy">Mala By Kashmala</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-ui text-[10px] uppercase tracking-wider text-grey">Amount</span>
+                    <span className="font-body text-sm font-semibold text-navy">Rs. {total.toLocaleString('en-PK')}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-ui text-[10px] uppercase tracking-wider text-grey">Delivery</span>
+                    <span className="font-ui text-[10px] font-semibold text-gold uppercase tracking-wider">Free</span>
                   </div>
                 </div>
-              )}
 
-              {/* Bank transfer details */}
-              {payment.method === 'bank' && (
-                <div className="bg-gold/5 border border-gold/20 rounded-xl p-5 mb-5">
-                  <p className="font-ui text-[10px] uppercase tracking-widest text-gold mb-3">Transfer To</p>
-                  <div className="flex flex-col gap-1.5 mb-4">
-                    {[
-                      { label: 'Bank', value: bankDetails.bank },
-                      { label: 'Account Title', value: bankDetails.title },
-                      { label: 'Account Number', value: bankDetails.account },
-                      { label: 'IBAN', value: bankDetails.iban },
-                      { label: 'Amount', value: `Rs. ${total.toLocaleString('en-PK')}` },
-                    ].map(({ label, value }) => (
-                      <div key={label} className="flex justify-between gap-4">
-                        <span className="font-ui text-[10px] uppercase tracking-wider text-grey shrink-0">{label}</span>
-                        <span className="font-body text-sm font-semibold text-navy text-right">{value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    <label className={labelClass}>Transaction ID</label>
-                    <input
-                      type="text"
-                      value={payment.transactionId}
-                      onChange={(e) => setPayment({ ...payment, transactionId: e.target.value })}
-                      className={inputClass}
-                      placeholder="Enter bank transaction / reference ID"
-                    />
-                  </div>
+                <div>
+                  <label className={labelClass}>Transaction ID</label>
+                  <input
+                    type="text"
+                    value={payment.transactionId}
+                    onChange={(e) => setPayment({ ...payment, transactionId: e.target.value })}
+                    className={inputClass}
+                    placeholder={`Enter ${payment.method === 'jazzcash' ? 'JazzCash' : 'EasyPaisa'} transaction ID`}
+                  />
                 </div>
-              )}
+              </div>
             </div>
           )}
 
@@ -308,12 +273,8 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
               <span className="font-body text-sm text-navy">Rs. {total.toLocaleString('en-PK')}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-ui text-[10px] uppercase tracking-widest text-grey">Shipping</span>
-              {isOnlinePayment ? (
-                <span className="font-ui text-[10px] font-semibold text-gold uppercase tracking-wider">Free</span>
-              ) : (
-                <span className="font-body text-sm text-navy">Rs. {appliedShipping.toLocaleString('en-PK')}</span>
-              )}
+              <span className="font-ui text-[10px] uppercase tracking-widest text-grey">Delivery</span>
+              <span className="font-ui text-[10px] font-semibold text-gold uppercase tracking-wider">Free</span>
             </div>
             <div className="flex justify-between pt-3 border-t border-grey-light mt-1">
               <span className="font-ui text-xs uppercase tracking-widest font-semibold text-navy">Total</span>
@@ -321,11 +282,9 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
             </div>
           </div>
 
-          {!isOnlinePayment && (
-            <p className="mt-4 font-body text-grey text-[11px] leading-relaxed bg-beige/60 rounded-lg px-3 py-2.5">
-              Save Rs. {shippingFee.toLocaleString('en-PK')} by paying online via JazzCash or Bank Transfer.
-            </p>
-          )}
+          <p className="mt-4 font-body text-grey text-[11px] leading-relaxed bg-beige/60 rounded-lg px-3 py-2.5">
+            Send payment screenshot to WhatsApp after placing your order.
+          </p>
         </div>
       </div>
     </div>
