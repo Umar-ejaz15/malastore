@@ -18,10 +18,10 @@ const fabricOptions   = ['Lawn', 'Chiffon', 'Silk', 'Organza', 'Cotton', 'Velvet
 const occasionOptions = ['Casual', 'Formal', 'Wedding', 'Party', 'Everyday', 'Eid']
 
 const PRICE_PRESETS = [
-  { label: 'Under Rs. 7,000',  min: 0,     max: 7000  },
-  { label: 'Rs. 7,000–12,000', min: 7000,  max: 12000 },
-  { label: 'Rs. 12,000–18,000',min: 12000, max: 18000 },
-  { label: 'Rs. 18,000+',      min: 18000, max: 50000 },
+  { label: 'Rs. 1,500 – 2,500', min: 1500, max: 2500 },
+  { label: 'Rs. 2,500 – 4,000', min: 2500, max: 4000 },
+  { label: 'Rs. 4,000 – 5,500', min: 4000, max: 5500 },
+  { label: 'Rs. 5,500 – 7,000', min: 5500, max: 7000 },
 ]
 
 export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSidebarProps) {

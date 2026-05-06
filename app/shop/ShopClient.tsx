@@ -39,8 +39,21 @@ function ShopContent({ products, categories }: ShopClientProps) {
       result = result.filter((p) => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))
     }
 
-    const activeCats = filters.categories.length > 0 ? filters.categories : categoryParam ? [categoryParam] : []
+    // "ready-to-wear" is the brand's umbrella — show every product.
+    const activeCats = (filters.categories.length > 0 ? filters.categories : categoryParam ? [categoryParam] : [])
+      .filter((c) => c !== 'ready-to-wear')
+
     if (activeCats.length > 0) result = result.filter((p) => activeCats.includes(p.categorySlug))
+
+    if (filters.fabrics.length > 0) {
+      const wanted = filters.fabrics.map((f) => f.toLowerCase())
+      result = result.filter((p) => p.fabric && wanted.includes(p.fabric.toLowerCase()))
+    }
+
+    if (filters.occasions.length > 0) {
+      const wanted = filters.occasions.map((o) => o.toLowerCase())
+      result = result.filter((p) => p.occasions?.some((o) => wanted.includes(o.toLowerCase())))
+    }
 
     result = result.filter((p) => p.price >= filters.priceMin && p.price <= filters.priceMax)
 

@@ -1,4 +1,4 @@
-import { PlaceholderImage } from '@/components/ui/PlaceholderImage'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 import { FeatureStrip } from '@/components/store/FeatureStrip'
 import { CategoryCard } from '@/components/store/CategoryCard'
@@ -31,7 +31,14 @@ export default async function HomePage() {
       {/* ────────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
         <div className="absolute inset-0">
-          <PlaceholderImage variant="hero" />
+          <Image
+            src="/hero.jpeg"
+            alt="Mala By Kashmala — Featured Collection"
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+          />
         </div>
 
         {/* Dynamic gradient overlays */}

@@ -12,7 +12,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'Address',
-    value: '14-B, Gulberg III\nLahore, Punjab 54660\nPakistan',
+    value: 'Khanewal\nPunjab, Pakistan',
   },
   {
     icon: (
@@ -21,7 +21,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'Phone',
-    value: '+92 42 3456 7890\n+92 300 0000000',
+    value: '0325 7166006',
   },
   {
     icon: (
@@ -31,7 +31,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'Email',
-    value: 'hello@mala.pk\nsupport@mala.pk',
+    value: 'malabykashmala@gmail.com',
   },
   {
     icon: (
@@ -41,7 +41,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'Store Hours',
-    value: 'Mon – Sat: 10am – 8pm\nSun: 12pm – 6pm',
+    value: 'Sun: 12pm – 8pm',
   },
 ]
 
@@ -106,8 +106,8 @@ export default function ContactPage() {
                     <circle cx="12" cy="9" r="2.5"/>
                   </svg>
                 </div>
-                <p className="font-ui text-navy font-semibold uppercase text-sm tracking-wider">Find Us in Lahore</p>
-                <p className="font-body text-grey text-sm">Gulberg III, Lahore</p>
+                <p className="font-ui text-navy font-semibold uppercase text-sm tracking-wider">Find Us in Khanewal</p>
+                <p className="font-body text-grey text-sm">Khanewal, Punjab</p>
               </div>
             </div>
           </div>

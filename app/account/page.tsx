@@ -20,10 +20,10 @@ export default function AccountPage() {
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-20 bg-beige/20">
 
       <div className="mb-8 text-center">
-        <Link href="/" className="font-display text-3xl font-semibold text-navy inline-block">
-          Mal<span className="text-gold">ā</span>
+        <Link href="/" className="font-display text-3xl font-semibold text-navy inline-block tracking-tight">
+          Mala <span className="text-gold">By</span> Kashmala
         </Link>
-        <p className="font-ui text-grey text-[10px] tracking-[0.3em] uppercase mt-1">Member Access</p>
+        <p className="font-ui text-grey text-[10px] tracking-[0.3em] uppercase mt-1">Mala By Kashmala</p>
       </div>
 
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-grey-light p-8">
@@ -82,7 +82,7 @@ export default function AccountPage() {
         {tab === 'register' && (
           <form onSubmit={handleRegister} className="flex flex-col gap-5">
             <h1 className="font-display text-2xl font-semibold text-navy text-center mb-1">
-              Join Mal<span className="text-gold">ā</span>
+              Join <span className="text-gold">Mala By Kashmala</span>
             </h1>
 
             <div>

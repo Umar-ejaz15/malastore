@@ -110,6 +110,81 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* SIZE GUIDE */}
+      <section id="size-guide" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-28 scroll-mt-24">
+        <div className="mb-12">
+          <p className="font-ui text-gold uppercase text-xs font-semibold tracking-widest mb-4">Fit & Measurements</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-navy leading-tight">
+            Size Guide
+          </h2>
+          <p className="text-grey max-w-2xl text-base mt-5">
+            All measurements are in inches. For the best fit, please compare with a similar garment you own.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Shirt */}
+          <div className="bg-off-white rounded-2xl border border-grey-light p-8">
+            <p className="font-ui text-gold uppercase text-[11px] font-semibold tracking-widest mb-1">Shirt</p>
+            <h3 className="font-display text-2xl font-semibold text-navy mb-6">Top Measurements</h3>
+            <table className="w-full font-body text-sm">
+              <thead>
+                <tr className="border-b border-grey-light">
+                  <th className="text-left py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Measure</th>
+                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Small</th>
+                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Medium</th>
+                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Large</th>
+                </tr>
+              </thead>
+              <tbody className="text-navy">
+                <tr className="border-b border-grey-light/60">
+                  <td className="py-3 font-semibold">Chest</td>
+                  <td className="text-center py-3">19</td>
+                  <td className="text-center py-3">20</td>
+                  <td className="text-center py-3">22</td>
+                </tr>
+                <tr>
+                  <td className="py-3 font-semibold">Sleeves</td>
+                  <td className="text-center py-3">22</td>
+                  <td className="text-center py-3">22</td>
+                  <td className="text-center py-3">23</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Trouser */}
+          <div className="bg-off-white rounded-2xl border border-grey-light p-8">
+            <p className="font-ui text-gold uppercase text-[11px] font-semibold tracking-widest mb-1">Trouser</p>
+            <h3 className="font-display text-2xl font-semibold text-navy mb-6">Bottom Measurements</h3>
+            <table className="w-full font-body text-sm">
+              <thead>
+                <tr className="border-b border-grey-light">
+                  <th className="text-left py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Measure</th>
+                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Small</th>
+                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Medium</th>
+                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Large</th>
+                </tr>
+              </thead>
+              <tbody className="text-navy">
+                <tr className="border-b border-grey-light/60">
+                  <td className="py-3 font-semibold">Waist</td>
+                  <td className="text-center py-3">28</td>
+                  <td className="text-center py-3">29.5</td>
+                  <td className="text-center py-3">31</td>
+                </tr>
+                <tr>
+                  <td className="py-3 font-semibold">Length</td>
+                  <td className="text-center py-3">36</td>
+                  <td className="text-center py-3">38</td>
+                  <td className="text-center py-3">38</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* CLOSING PHILOSOPHY QUOTE */}
       <section className="py-28 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-navy via-charcoal to-slate">
         <div className="max-w-3xl mx-auto text-center">
