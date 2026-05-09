@@ -1,4 +1,5 @@
 import { PlaceholderImage } from '@/components/ui/PlaceholderImage'
+import { SizeGuide } from '@/components/store/SizeGuide'
 
 const pillars = [
   {
@@ -122,67 +123,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Shirt */}
-          <div className="bg-off-white rounded-2xl border border-grey-light p-8">
-            <p className="font-ui text-gold uppercase text-[11px] font-semibold tracking-widest mb-1">Shirt</p>
-            <h3 className="font-display text-2xl font-semibold text-navy mb-6">Top Measurements</h3>
-            <table className="w-full font-body text-sm">
-              <thead>
-                <tr className="border-b border-grey-light">
-                  <th className="text-left py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Measure</th>
-                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Small</th>
-                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Medium</th>
-                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Large</th>
-                </tr>
-              </thead>
-              <tbody className="text-navy">
-                <tr className="border-b border-grey-light/60">
-                  <td className="py-3 font-semibold">Chest</td>
-                  <td className="text-center py-3">19</td>
-                  <td className="text-center py-3">20</td>
-                  <td className="text-center py-3">22</td>
-                </tr>
-                <tr>
-                  <td className="py-3 font-semibold">Sleeves</td>
-                  <td className="text-center py-3">22</td>
-                  <td className="text-center py-3">22</td>
-                  <td className="text-center py-3">23</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Trouser */}
-          <div className="bg-off-white rounded-2xl border border-grey-light p-8">
-            <p className="font-ui text-gold uppercase text-[11px] font-semibold tracking-widest mb-1">Trouser</p>
-            <h3 className="font-display text-2xl font-semibold text-navy mb-6">Bottom Measurements</h3>
-            <table className="w-full font-body text-sm">
-              <thead>
-                <tr className="border-b border-grey-light">
-                  <th className="text-left py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Measure</th>
-                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Small</th>
-                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Medium</th>
-                  <th className="text-center py-3 font-ui text-[10px] uppercase tracking-widest text-grey font-semibold">Large</th>
-                </tr>
-              </thead>
-              <tbody className="text-navy">
-                <tr className="border-b border-grey-light/60">
-                  <td className="py-3 font-semibold">Waist</td>
-                  <td className="text-center py-3">28</td>
-                  <td className="text-center py-3">29.5</td>
-                  <td className="text-center py-3">31</td>
-                </tr>
-                <tr>
-                  <td className="py-3 font-semibold">Length</td>
-                  <td className="text-center py-3">36</td>
-                  <td className="text-center py-3">38</td>
-                  <td className="text-center py-3">38</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <SizeGuide />
       </section>
 
       {/* CLOSING PHILOSOPHY QUOTE */}

@@ -57,17 +57,17 @@ export default async function HomePage() {
           </div>
 
           {/* Main headline */}
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-off-white leading-tight mb-6 animate-fade-up delay-100 max-w-4xl">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-off-white leading-tight mb-6 animate-fade-up delay-100 max-w-4xl">
             Quiet Confidence.<br />Intentional Design.
           </h1>
 
           {/* Subheading */}
-          <p className="font-body text-lg md:text-xl text-off-white/80 max-w-2xl mb-12 animate-fade-up delay-200 leading-relaxed">
+          <p className="font-body text-base sm:text-lg md:text-xl text-off-white/80 max-w-2xl mb-10 sm:mb-12 animate-fade-up delay-200 leading-relaxed">
             Ready-to-wear collections for the woman who values simplicity, yet refuses to be overlooked.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-up delay-300 w-full sm:w-auto max-w-xs sm:max-w-none">
             <Button href="/shop" variant="light" size="lg" className="px-8">
               Explore Collection
             </Button>

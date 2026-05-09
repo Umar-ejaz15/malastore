@@ -87,11 +87,11 @@ export function CartSidebar() {
                     </p>
                     <div className="flex items-center gap-3 mt-2">
                       <div className="flex items-center border border-grey-light rounded">
-                        <button onClick={() => updateQty(item.product.id, item.quantity - 1)} className="w-7 h-7 flex items-center justify-center text-navy hover:bg-beige transition-colors text-sm" aria-label="Decrease">−</button>
+                        <button onClick={() => updateQty(item.product.id, item.size, item.quantity - 1)} className="w-7 h-7 flex items-center justify-center text-navy hover:bg-beige transition-colors text-sm" aria-label="Decrease">−</button>
                         <span className="w-7 text-center font-body text-sm text-navy">{item.quantity}</span>
-                        <button onClick={() => updateQty(item.product.id, item.quantity + 1)} className="w-7 h-7 flex items-center justify-center text-navy hover:bg-beige transition-colors text-sm" aria-label="Increase">+</button>
+                        <button onClick={() => updateQty(item.product.id, item.size, item.quantity + 1)} className="w-7 h-7 flex items-center justify-center text-navy hover:bg-beige transition-colors text-sm" aria-label="Increase">+</button>
                       </div>
-                      <button onClick={() => removeItem(item.product.id)} className="font-ui text-[10px] uppercase tracking-wider text-grey hover:text-navy transition-colors" aria-label="Remove">Remove</button>
+                      <button onClick={() => removeItem(item.product.id, item.size)} className="font-ui text-[10px] uppercase tracking-wider text-grey hover:text-navy transition-colors" aria-label="Remove">Remove</button>
                     </div>
                   </div>
                 </div>

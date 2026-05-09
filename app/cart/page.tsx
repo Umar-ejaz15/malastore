@@ -76,11 +76,11 @@ export default function CartPage() {
 
                 <div className="flex items-center gap-5 mt-3">
                   <div className="flex items-center border border-grey-light rounded-lg overflow-hidden">
-                    <button onClick={() => updateQty(item.product.id, item.quantity - 1)} className="w-8 h-8 flex items-center justify-center text-navy hover:bg-beige transition-colors select-none">−</button>
+                    <button onClick={() => updateQty(item.product.id, item.size, item.quantity - 1)} className="w-8 h-8 flex items-center justify-center text-navy hover:bg-beige transition-colors select-none">−</button>
                     <span className="w-8 text-center font-body text-sm text-navy select-none">{item.quantity}</span>
-                    <button onClick={() => updateQty(item.product.id, item.quantity + 1)} className="w-8 h-8 flex items-center justify-center text-navy hover:bg-beige transition-colors select-none">+</button>
+                    <button onClick={() => updateQty(item.product.id, item.size, item.quantity + 1)} className="w-8 h-8 flex items-center justify-center text-navy hover:bg-beige transition-colors select-none">+</button>
                   </div>
-                  <button onClick={() => removeItem(item.product.id)} className="font-ui text-[10px] uppercase tracking-widest text-grey hover:text-navy transition-colors">Remove</button>
+                  <button onClick={() => removeItem(item.product.id, item.size)} className="font-ui text-[10px] uppercase tracking-widest text-grey hover:text-navy transition-colors">Remove</button>
                 </div>
               </div>
 

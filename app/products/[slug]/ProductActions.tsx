@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCart } from '@/context/CartContext'
 import { useWishlist } from '@/context/WishlistContext'
+import { SizeGuide } from '@/components/store/SizeGuide'
 import type { Product } from '@/types'
 
 export function ProductActions({ product }: { product: Product }) {
@@ -11,7 +12,20 @@ export function ProductActions({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] ?? '')
   const [qty, setQty] = useState(1)
   const [openAccordion, setOpenAccordion] = useState<string | null>('description')
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false)
   const isWishlisted = hasItem(product.id)
+
+  useEffect(() => {
+    if (!sizeGuideOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSizeGuideOpen(false) }
+    document.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [sizeGuideOpen])
 
   const handleAddToCart = () => {
     for (let i = 0; i < qty; i++) addItem(product, selectedSize)
@@ -42,7 +56,11 @@ export function ProductActions({ product }: { product: Product }) {
       <div>
         <div className="flex items-center justify-between mb-3">
           <span className="font-ui text-xs uppercase tracking-widest text-navy font-semibold">Select Size</span>
-          <button className="font-ui text-[10px] uppercase tracking-widest text-gold hover:text-gold-dark transition-colors">
+          <button
+            type="button"
+            onClick={() => setSizeGuideOpen(true)}
+            className="font-ui text-[10px] uppercase tracking-widest text-gold hover:text-gold-dark transition-colors underline-offset-2 hover:underline"
+          >
             Size Guide
           </button>
         </div>
@@ -115,6 +133,46 @@ export function ProductActions({ product }: { product: Product }) {
           </div>
         ))}
       </div>
+
+      {/* Size Guide modal */}
+      {sizeGuideOpen && (
+        <div
+          className="fixed inset-0 z-60 flex items-end sm:items-center justify-center bg-navy/60 backdrop-blur-sm p-0 sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Size Guide"
+          onClick={() => setSizeGuideOpen(false)}
+        >
+          <div
+            className="bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-2xl shadow-xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white border-b border-grey-light px-5 sm:px-7 py-4 flex items-center justify-between">
+              <div>
+                <p className="font-ui text-gold uppercase text-[10px] font-semibold tracking-widest">Fit & Measurements</p>
+                <h2 className="font-display text-xl sm:text-2xl font-semibold text-navy">Size Guide</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSizeGuideOpen(false)}
+                className="w-9 h-9 flex items-center justify-center rounded-full text-navy hover:bg-beige transition-colors"
+                aria-label="Close size guide"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <div className="px-5 sm:px-7 py-5">
+              <p className="font-body text-grey text-xs sm:text-sm mb-5 leading-relaxed">
+                All measurements are in inches. For the best fit, please compare with a similar garment you own.
+              </p>
+              <SizeGuide />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

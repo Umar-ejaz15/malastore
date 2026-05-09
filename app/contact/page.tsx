@@ -17,15 +17,6 @@ const contactInfo = [
   {
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-gold shrink-0 mt-0.5">
-        <path d="M22 16.92V20a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 2 4.18 2 2 0 0 1 4 2h3.09a2 2 0 0 1 2 1.72c.09.74.29 1.47.59 2.17a2 2 0 0 1-.45 2.11L8.09 9.1a16 16 0 0 0 6.81 6.81l1.1-1.14a2 2 0 0 1 2.11-.45c.7.3 1.43.5 2.17.59A2 2 0 0 1 22 16.92Z"/>
-      </svg>
-    ),
-    label: 'Phone',
-    value: '0325 7166006',
-  },
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-gold shrink-0 mt-0.5">
         <rect x="2" y="4" width="20" height="16" rx="2"/>
         <path d="M2 7l10 7 10-7"/>
       </svg>
@@ -40,8 +31,8 @@ const contactInfo = [
         <path d="M12 6v6l4 2"/>
       </svg>
     ),
-    label: 'Store Hours',
-    value: 'Sun: 12pm – 8pm',
+    label: 'Availability',
+    value: 'Online 24 / 7\nWe respond within hours',
   },
 ]
 

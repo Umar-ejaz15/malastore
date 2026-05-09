@@ -15,7 +15,7 @@ const INFO = [
 
 const SUPPORT = [
   { label: 'Contact Us',          href: '/contact' },
-  { label: 'Track Order',         href: '/account' },
+  { label: 'Track Order',         href: '/track-order' },
   { label: 'Returns & Exchange',  href: '/contact#returns' },
   { label: 'Shipping Policy',     href: '/contact#shipping' },
   { label: 'FAQ',                 href: '/contact#faq' },
