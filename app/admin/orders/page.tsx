@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useState, useEffect, useCallback, useTransition, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
@@ -33,21 +33,23 @@ interface Order {
 
 function OrdersContent() {
   const searchParams = useSearchParams()
-  const [orders,  setOrders]  = useState<Order[]>([])
-  const [loading, setLoading] = useState(true)
-  const [filter,  setFilter]  = useState(searchParams.get('status') ?? '')
-  const [search,  setSearch]  = useState('')
+  const [orders,   setOrders]  = useState<Order[]>([])
+  const [filter,   setFilter]  = useState(searchParams.get('status') ?? '')
+  const [search,   setSearch]  = useState('')
+  const [isPending, startTransition] = useTransition()
 
-  const load = useCallback(async () => {
-    setLoading(true)
-    const p = new URLSearchParams()
-    if (filter) p.set('status', filter)
-    if (search) p.set('search', search)
-    const res  = await fetch(`/api/admin/orders?${p}`)
-    const data = await res.json()
-    setOrders(data.orders ?? [])
-    setLoading(false)
-  }, [filter, search])
+  const loading = isPending
+
+  const load = useCallback(() => {
+    startTransition(async () => {
+      const p = new URLSearchParams()
+      if (filter) p.set('status', filter)
+      if (search) p.set('search', search)
+      const res  = await fetch(`/api/admin/orders?${p}`)
+      const data = await res.json()
+      setOrders(data.orders ?? [])
+    })
+  }, [filter, search, startTransition])
 
   useEffect(() => { load() }, [load])
 

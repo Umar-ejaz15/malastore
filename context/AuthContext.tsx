@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useTransition } from 'react'
 
 export interface AuthUser {
   userId: string
@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextValue | null>(null)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser]     = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
+  const [, startTransition]  = useTransition()
 
   const refresh = useCallback(async () => {
     try {
@@ -33,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     finally  { setLoading(false) }
   }, [])
 
-  useEffect(() => { refresh() }, [refresh])
+  useEffect(() => { startTransition(() => { void refresh() }) }, [refresh, startTransition])
 
   const login = async (email: string, password: string) => {
     const res  = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) })

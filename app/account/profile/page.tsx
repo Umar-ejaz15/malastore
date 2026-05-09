@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
@@ -8,9 +7,6 @@ import { useRouter } from 'next/navigation'
 export default function ProfilePage() {
   const { user, logout } = useAuth()
   const router = useRouter()
-  const [saving, setSaving] = useState(false)
-  const [saved, setSaved] = useState(false)
-
   const handleLogout = async () => {
     await logout()
     router.push('/')

@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
   if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 })
 
   // Verify email matches — works for both guest and registered orders
-  const orderEmail = (order.guestEmail ?? order.shippingAddress as { name?: string; phone?: string } | null)
   // Check against guest email, or the shipping address contact
   const shippingAddr = order.shippingAddress as { name?: string; phone?: string; email?: string } | null
   const storedEmail  = order.guestEmail?.toLowerCase() ?? shippingAddr?.email?.toLowerCase() ?? ''

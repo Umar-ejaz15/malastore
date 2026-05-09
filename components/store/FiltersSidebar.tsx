@@ -24,15 +24,61 @@ const PRICE_PRESETS = [
   { label: 'Rs. 5,500 – 7,000', min: 5500, max: 7000 },
 ]
 
+// ── Section header — declared outside to satisfy react-hooks/static-components ─
+type ExpandedKey = 'category' | 'price' | 'fabric' | 'occasion'
+
+interface SectionProps {
+  label: string
+  sectionKey: ExpandedKey
+  count?: number
+  expanded: Record<ExpandedKey, boolean>
+  onToggle: (key: ExpandedKey) => void
+}
+
+function FilterSection({ label, sectionKey, count, expanded, onToggle }: SectionProps) {
+  return (
+    <button
+      onClick={() => onToggle(sectionKey)}
+      className="flex items-center justify-between w-full py-3.5 group"
+    >
+      <div className="flex items-center gap-2">
+        <span className="font-ui text-[10px] font-semibold uppercase tracking-widest text-navy">
+          {label}
+        </span>
+        {count != null && count > 0 && (
+          <span className="w-4 h-4 flex items-center justify-center rounded-full bg-gold text-navy font-ui font-bold text-[8px]">
+            {count}
+          </span>
+        )}
+      </div>
+      <svg
+        width="11"
+        height="11"
+        viewBox="0 0 12 12"
+        fill="none"
+        className={`text-grey transition-transform duration-200 ${expanded[sectionKey] ? 'rotate-180' : ''}`}
+      >
+        <path
+          d="M2 4L6 8L10 4"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  )
+}
+
 export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSidebarProps) {
-  const [expanded, setExpanded] = useState({
+  const [expanded, setExpanded] = useState<Record<ExpandedKey, boolean>>({
     category: true,
     price:    false,
     fabric:   false,
     occasion: false,
   })
 
-  const toggle = (s: keyof typeof expanded) =>
+  const toggle = (s: ExpandedKey) =>
     setExpanded((p) => ({ ...p, [s]: !p[s] }))
 
   const handleCategory = (slug: string) => {
@@ -72,43 +118,7 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
   const clearAll = () =>
     onFilterChange({ categories: [], priceMin: 0, priceMax: 50000, fabrics: [], occasions: [] })
 
-  // ── Section header ──────────────────────────────────────────────────
-  function Section({
-    label,
-    sectionKey,
-    count,
-  }: {
-    label: string
-    sectionKey: keyof typeof expanded
-    count?: number
-  }) {
-    return (
-      <button
-        onClick={() => toggle(sectionKey)}
-        className="flex items-center justify-between w-full py-3.5 group"
-      >
-        <div className="flex items-center gap-2">
-          <span className="font-ui text-[10px] font-semibold uppercase tracking-widest text-navy">
-            {label}
-          </span>
-          {count != null && count > 0 && (
-            <span className="w-4 h-4 flex items-center justify-center rounded-full bg-gold text-navy font-ui font-bold text-[8px]">
-              {count}
-            </span>
-          )}
-        </div>
-        <svg
-          width="11"
-          height="11"
-          viewBox="0 0 12 12"
-          fill="none"
-          className={`text-grey transition-transform duration-200 ${expanded[sectionKey] ? 'rotate-180' : ''}`}
-        >
-          <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-    )
-  }
+  const sectionProps = { expanded, onToggle: toggle }
 
   return (
     <div className="w-full">
@@ -116,7 +126,9 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
-          <span className="font-ui text-xs font-semibold uppercase tracking-widest text-navy">Filter</span>
+          <span className="font-ui text-xs font-semibold uppercase tracking-widest text-navy">
+            Filter
+          </span>
           {activeFilterCount > 0 && (
             <span className="font-ui text-[9px] font-bold bg-navy text-white px-1.5 py-0.5 rounded-full">
               {activeFilterCount}
@@ -133,9 +145,14 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
         )}
       </div>
 
-      {/* ── Category ──────────────────────────────────────────────── */}
+      {/* ── Category ──────────────────────────────────────────────────── */}
       <div className="border-t border-grey-light">
-        <Section label="Category" sectionKey="category" count={currentFilters.categories.length} />
+        <FilterSection
+          label="Category"
+          sectionKey="category"
+          count={currentFilters.categories.length}
+          {...sectionProps}
+        />
         {expanded.category && (
           <div className="pb-4 flex flex-col gap-1">
             {categoryOptions.map((cat) => {
@@ -150,12 +167,20 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
                       : 'text-navy/70 hover:bg-beige/60 hover:text-navy'
                   }`}
                 >
-                  <span className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 transition-colors ${
-                    active ? 'bg-gold border-gold' : 'border-grey-light'
-                  }`}>
+                  <span
+                    className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 transition-colors ${
+                      active ? 'bg-gold border-gold' : 'border-grey-light'
+                    }`}
+                  >
                     {active && (
                       <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                        <path d="M1 4L3 6L7 2" stroke="#0F1419" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M1 4L3 6L7 2"
+                          stroke="#0F1419"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     )}
                   </span>
@@ -167,12 +192,13 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
         )}
       </div>
 
-      {/* ── Price Range ────────────────────────────────────────────── */}
+      {/* ── Price Range ───────────────────────────────────────────────── */}
       <div className="border-t border-grey-light">
-        <Section
+        <FilterSection
           label="Price Range"
           sectionKey="price"
           count={currentFilters.priceMin > 0 || currentFilters.priceMax < 50000 ? 1 : 0}
+          {...sectionProps}
         />
         {expanded.price && (
           <div className="pb-4 flex flex-col gap-1.5">
@@ -189,7 +215,13 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
                   <span className="font-body text-sm">{p.label}</span>
                   {active && (
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M1.5 5L4 7.5L8.5 2.5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   )}
                 </button>
@@ -198,12 +230,16 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
 
             {/* Custom range */}
             <div className="mt-2 px-1">
-              <p className="font-ui text-[9px] uppercase tracking-widest text-grey mb-2">Custom Range</p>
+              <p className="font-ui text-[9px] uppercase tracking-widest text-grey mb-2">
+                Custom Range
+              </p>
               <div className="flex items-center gap-2">
                 <input
                   type="number"
                   value={currentFilters.priceMin}
-                  onChange={(e) => onFilterChange({ ...currentFilters, priceMin: Number(e.target.value) })}
+                  onChange={(e) =>
+                    onFilterChange({ ...currentFilters, priceMin: Number(e.target.value) })
+                  }
                   className="flex-1 border border-grey-light bg-white text-navy font-body text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-gold transition-colors"
                   placeholder="Min"
                 />
@@ -211,7 +247,9 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
                 <input
                   type="number"
                   value={currentFilters.priceMax}
-                  onChange={(e) => onFilterChange({ ...currentFilters, priceMax: Number(e.target.value) })}
+                  onChange={(e) =>
+                    onFilterChange({ ...currentFilters, priceMax: Number(e.target.value) })
+                  }
                   className="flex-1 border border-grey-light bg-white text-navy font-body text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-gold transition-colors"
                   placeholder="Max"
                 />
@@ -221,9 +259,14 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
         )}
       </div>
 
-      {/* ── Fabric ────────────────────────────────────────────────── */}
+      {/* ── Fabric ────────────────────────────────────────────────────── */}
       <div className="border-t border-grey-light">
-        <Section label="Fabric" sectionKey="fabric" count={currentFilters.fabrics.length} />
+        <FilterSection
+          label="Fabric"
+          sectionKey="fabric"
+          count={currentFilters.fabrics.length}
+          {...sectionProps}
+        />
         {expanded.fabric && (
           <div className="pb-4 flex flex-wrap gap-2">
             {fabricOptions.map((fab) => {
@@ -246,9 +289,14 @@ export function FiltersSidebar({ onFilterChange, currentFilters }: FiltersSideba
         )}
       </div>
 
-      {/* ── Occasion ──────────────────────────────────────────────── */}
+      {/* ── Occasion ──────────────────────────────────────────────────── */}
       <div className="border-t border-grey-light">
-        <Section label="Occasion" sectionKey="occasion" count={currentFilters.occasions.length} />
+        <FilterSection
+          label="Occasion"
+          sectionKey="occasion"
+          count={currentFilters.occasions.length}
+          {...sectionProps}
+        />
         {expanded.occasion && (
           <div className="pb-4 flex flex-wrap gap-2">
             {occasionOptions.map((occ) => {

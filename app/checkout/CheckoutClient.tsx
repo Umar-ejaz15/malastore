@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -51,15 +51,18 @@ export function CheckoutClient({ settings }: { settings: SiteSettings }) {
   const [errors,    setErrors]    = useState<FormErrors>({})
   const [placing,   setPlacing]   = useState(false)
   const [sizeGuide, setSizeGuide] = useState(false)
+  const [, startTransition] = useTransition()
 
   // Pre-fill from session
   useEffect(() => {
     if (!user) return
-    const parts = user.name.trim().split(' ')
-    setFirstName(parts[0] ?? '')
-    setLastName(parts.slice(1).join(' '))
-    setEmail(user.email)
-  }, [user])
+    startTransition(() => {
+      const parts = user.name.trim().split(' ')
+      setFirstName(parts[0] ?? '')
+      setLastName(parts.slice(1).join(' '))
+      setEmail(user.email)
+    })
+  }, [user, startTransition])
 
   const deliveryCharge = method === 'cod' ? codCharge : method ? 0 : null
   const grandTotal     = total + (deliveryCharge ?? 0)

@@ -1,62 +1,43 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
+import { useWishlistStore } from '@/store/wishlistStore'
+import { useUIStore } from '@/store/uiStore'
 import type { WishlistItem, Product } from '@/types'
 
-interface WishlistContextType {
-  items: WishlistItem[]
-  count: number
-  toggleItem: (product: Product) => void
-  hasItem: (productId: string) => boolean
-  clearWishlist: () => void
-}
+export type { WishlistItem }
 
-const WishlistContext = createContext<WishlistContextType | null>(null)
-
+// Thin provider — handles auth-logout side effect only.
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<WishlistItem[]>([])
+  const clearWishlist = useWishlistStore((s) => s.clearWishlist)
 
-  // Load from localStorage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('mala-wishlist')
-      if (stored) setItems(JSON.parse(stored))
-    } catch {}
-  }, [])
+    const onLogout = () => clearWishlist()
+    window.addEventListener('auth:logout', onLogout)
+    return () => window.removeEventListener('auth:logout', onLogout)
+  }, [clearWishlist])
 
-  // Persist to localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem('mala-wishlist', JSON.stringify(items))
-    } catch {}
-  }, [items])
-
-  const count = items.length
-
-  const toggleItem = useCallback((product: Product) => {
-    setItems((prev) => {
-      const exists = prev.find((i) => i.productId === product.id)
-      if (exists) return prev.filter((i) => i.productId !== product.id)
-      return [...prev, { productId: product.id, product }]
-    })
-  }, [])
-
-  const hasItem = useCallback(
-    (productId: string) => items.some((i) => i.productId === productId),
-    [items]
-  )
-
-  const clearWishlist = useCallback(() => setItems([]), [])
-
-  return (
-    <WishlistContext.Provider value={{ items, count, toggleItem, hasItem, clearWishlist }}>
-      {children}
-    </WishlistContext.Provider>
-  )
+  return <>{children}</>
 }
 
 export function useWishlist() {
-  const ctx = useContext(WishlistContext)
-  if (!ctx) throw new Error('useWishlist must be used within WishlistProvider')
-  return ctx
+  const items         = useWishlistStore((s) => s.items)
+  const _toggleItem   = useWishlistStore((s) => s.toggleItem)
+  const clearWishlist = useWishlistStore((s) => s.clearWishlist)
+  const addToast      = useUIStore((s) => s.addToast)
+
+  const count   = items.length
+  const hasItem = (productId: string) => items.some((i) => i.productId === productId)
+
+  const toggleItem = (product: Product) => {
+    const alreadyIn = hasItem(product.id)
+    _toggleItem(product)
+    addToast(
+      alreadyIn ? 'Removed from wishlist' : 'Added to wishlist',
+      alreadyIn ? 'info' : 'success',
+      product.name
+    )
+  }
+
+  return { items, count, toggleItem, hasItem, clearWishlist }
 }

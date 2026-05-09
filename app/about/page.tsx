@@ -73,7 +73,7 @@ export default function AboutPage() {
             We create for the woman who values simplicity, yet refuses to be overlooked. The woman who moves through her day with purpose — balancing ambition, grace, and individuality. Our pieces are designed to complement her rhythm: effortless, refined, and enduring.
           </p>
           <p className="text-lg font-light">
-            Rooted in minimalism, our ready-to-wear collections focus on clean silhouettes, thoughtful tailoring, and premium fabrics. From understated solids to delicately printed pieces and finely executed embroidery — both machine and hand-crafted techniques inspired by Pakistan's rich heritage such as kachha dhaga — every design is created with restraint and meaning.
+            Rooted in minimalism, our ready-to-wear collections focus on clean silhouettes, thoughtful tailoring, and premium fabrics. From understated solids to delicately printed pieces and finely executed embroidery — both machine and hand-crafted techniques inspired by Pakistan&apos;s rich heritage such as kachha dhaga — every design is created with restraint and meaning.
           </p>
           <p className="text-lg font-light">
             At MALA, we believe luxury does not need to be loud. It lives in the details — in the fall of a fabric, in the precision of a cut, in the quiet beauty of something well made.
@@ -133,9 +133,9 @@ export default function AboutPage() {
             <p className="font-ui text-gold text-xs font-semibold uppercase tracking-widest">Our Philosophy</p>
           </div>
           <p className="font-display text-3xl md:text-4xl font-bold text-off-white leading-relaxed mb-10">
-            "MALA By Kashmala is not just clothing.<br />
+            &ldquo;MALA By Kashmala is not just clothing.<br />
             It is a feeling — of confidence, of softness,<br />
-            of strength in simplicity."
+            of strength in simplicity.&rdquo;
           </p>
           <p className="font-ui text-gold text-xs uppercase tracking-widest font-semibold">
             — Kashmala, Founder

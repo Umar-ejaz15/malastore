@@ -6,6 +6,7 @@ import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
 import { Header } from '@/components/layout/Header'
 import { CartSidebar } from '@/components/layout/CartSidebar'
 import { Footer } from '@/components/layout/Footer'
+import { ToastContainer } from '@/components/ui/Toast'
 
 const cormorant = Cormorant_Garamond({
   variable: '--font-display',
@@ -48,6 +49,7 @@ export default function RootLayout({
           <CartSidebar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ToastContainer />
         </Providers>
       </body>
     </html>

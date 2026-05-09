@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { orders, orderItems } from '@/lib/db/schema'
 import { getSession, generateOrderNumber } from '@/lib/auth'
-import { eq, or, desc } from 'drizzle-orm'
+import { desc } from 'drizzle-orm'
 
 // GET /api/orders — orders for the logged-in user (by userId OR by contact email)
 export async function GET() {

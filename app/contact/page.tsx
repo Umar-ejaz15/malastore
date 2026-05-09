@@ -58,10 +58,10 @@ export default function ContactPage() {
         <div className="mt-12 mb-16">
           <p className="font-ui text-gold uppercase text-sm font-semibold tracking-widest mb-4">Get in Touch</p>
           <h1 className="font-display text-5xl md:text-6xl font-bold text-navy leading-tight max-w-3xl">
-            We'd Love to Hear From You
+            We&apos;d Love to Hear From You
           </h1>
           <p className="text-grey max-w-2xl text-lg mt-6">
-            Have questions about our collections, shipping, or anything else? Reach out to us and we'll get back to you shortly.
+            Have questions about our collections, shipping, or anything else? Reach out to us and we&apos;ll get back to you shortly.
           </p>
         </div>
 
@@ -180,7 +180,7 @@ export default function ContactPage() {
             </form>
 
             {sent && (
-              <p className="mt-4 text-center text-emerald font-semibold text-sm">Thank you! We'll be in touch shortly.</p>
+              <p className="mt-4 text-center text-emerald font-semibold text-sm">Thank you! We&apos;ll be in touch shortly.</p>
             )}
           </div>
         </div>

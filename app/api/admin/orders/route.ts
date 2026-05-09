@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { orders } from '@/lib/db/schema'
 import { getSession } from '@/lib/auth'
-import { desc, eq, like, or } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 
 export async function GET(req: NextRequest) {
   const session = await getSession()
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const status = searchParams.get('status')
   const search = searchParams.get('search')
 
-  let query = db.query.orders.findMany({
+  const query = db.query.orders.findMany({
     orderBy: [desc(orders.createdAt)],
     with: {
       items: true,
